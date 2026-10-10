@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Правила клана Стокгольм</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #0f1729 0%, #1a2540 100%);
+    color: #e8eefc;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    background: rgba(20, 30, 54, 0.7);
+    border: 1px solid rgba(96, 180, 255, 0.25);
+    border-radius: 20px;
+    padding: 32px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+  
+  header {
+    text-align: center;
+    padding-bottom: 24px;
+    border-bottom: 2px solid rgba(96, 180, 255, 0.3);
+    margin-bottom: 28px;
+  }
+  
+  h1 {
+    font-size: 32px;
+    background: linear-gradient(135deg, #60b4ff, #a0c8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  
+  .subtitle {
+    color: #8caac8;
+    font-size: 14px;
+  }
+  
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+    padding: 16px;
+    background: rgba(15, 23, 41, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(96, 180, 255, 0.15);
+  }
+  
+  nav a {
+    color: #60b4ff;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(96, 180, 255, 0.1);
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  
+  nav a:hover {
+    background: rgba(96, 180, 255, 0.25);
+    color: #a0c8ff;
+  }
+  
+  section {
+    margin-bottom: 32px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    color: #60b4ff;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(96, 180, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  h2::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(180deg, #60b4ff, #3a7dcc);
+    border-radius: 2px;
+  }
+  
+  .rule {
+    background: rgba(15, 23, 41, 0.5);
+    border-left: 3px solid rgba(96, 180, 255, 0.4);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  
+  .rule:hover {
+    background: rgba(15, 23, 41, 0.8);
+    border-left-color: #60b4ff;
+    transform: translateX(4px);
+  }
+  
+  .rule.danger {
+    border-left-color: rgba(255, 90, 120, 0.6);
+  }
+  
+  .rule.danger:hover {
+    border-left-color: #ff5a78;
+  }
+  
+  .rule h3 {
+    font-size: 15px;
+    color: #e8eefc;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  
+  .rule.danger h3 {
+    color: #ff9aad;
+  }
+  
+  .rule p {
+    color: #b0c4dc;
+    font-size: 14px;
+  }
+  
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: rgba(255, 90, 120, 0.15);
+    color: #ff9aad;
+    margin-left: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+  
+  .badge.info {
+    background: rgba(96, 180, 255, 0.15);
+    color: #60b4ff;
+  }
+  
+  .badge.warn {
+    background: rgba(255, 200, 90, 0.15);
+    color: #ffc85a;
+  }
+  
+  .punishment {
+    background: linear-gradient(135deg, rgba(255, 90, 120, 0.08), rgba(255, 90, 120, 0.02));
+    border: 1px solid rgba(255, 90, 120, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  .punishment p {
+    color: #ffb8c5;
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255, 90, 120, 0.15);
+  }
+  
+  .punishment p:last-child {
+    border-bottom: none;
+  }
+  
+  .punishment p::before {
+    content: '→ ';
+    color: #ff5a78;
+    font-weight: bold;
+    margin-right: 4px;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(96, 180, 255, 0.15);
+    color: #6a86a8;
+    font-size: 13px;
+  }
+  
+  @media (max-width: 600px) {
+    body { padding: 10px; }
+    .container { padding: 20px; border-radius: 14px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 17px; }
+    nav a { font-size: 12px; padding: 5px 10px; }
+    .rule { padding: 12px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⚓ Стокгольм</h1>
+    <p class="subtitle">Правила клана · Build a Boat for Treasure</p>
+  </header>
+
+  <nav>
+    <a href="#general">Общее</a>
+    <a href="#forbidden">Запрещённое ПО</a>
+    <a href="#team">Команда</a>
+    <a href="#ranks">Ранги</a>
+    <a href="#punish">Наказания</a>
+  </nav>
+
+  <section id="general">
+    <h2>Общие положения</h2>
+
+    <div class="rule">
+      <h3>1. Уважение превыше всего</h3>
+      <p>Оскорбления тиммейтов, токсичность, расизм, буллинг и любая травля строго запрещены — независимо от того, шутите вы или нет. Мы здесь, чтобы вместе строить крутые корабли, а не выяснять отношения. Конструктивная критика приветствуется, унижение — нет.</p>
+    </div>
+
+    <div class="rule">
+      <h3>2. Адекватность в чате</h3>
+      <p>Никакого спама, флуда, капса, рекламы сторонних каналов, читов, скама и подозрительных ссылок без разрешения главы или выше ранга офицеров. Обсуждайте всё, что угодно, но держите чат чистым и приятным для чтения.</p>
+    </div>
+
+    <div class="rule">
+      <h3>3. Язык общения</h3>
+      <p>Основной язык клана — русский. Уважайте тех, кто к вам присоединился, и не превращайте общение в непонятный для остальных хлам.</p>
+    </div>
+
+    <div class="rule">
+      <h3>4. Дружелюбие к новичкам</h3>
+      <p>Каждый когда-то был новичком. Не высмеивайте за неопытность, не отказывайте в помощи демонстративно и не создавайте чувство лишнего у новых участников. Клан — это команда, а не закрытый ад.</p>
+    </div>
+
+    <div class="rule">
+      <h3>5. Конфликты — решаем</h3>
+      <p>Сами конфликты не наказываются, но публичные разборки в чате запрещены. Возник спор — не устраивайте балаган, а пишите жалобу в Высший Офицерский Состав. На любые действия администрации можно подать в суд и решить всё по закону.</p>
+    </div>
+
+    <div class="rule">
+      <h3>6. Уважение к чужим границам</h3>
+      <p>Не лезьте в чужие постройки, инвентари и механизмы без разрешения. Даже если просто посмотреть — спросите.</p>
+    </div>
+  </section>
+
+  <section id="forbidden">
+    <h2>Запрещённое ПО</h2>
+
+    <div class="rule danger">
+      <h3>7. Запрещённые программы и скрипты <span class="badge">БАН</span></h3>
+      <p>Категорически запрещено использование любого стороннего ПО, дающего преимущество в игре: читы, эксплойты, автофарм, авто-кликеры, макросы, автопарсеры, автологин, скрипты для Roblox / Build a Boat, скины-инжекторы, executor'ы и любые «помощники» (Krnl, Synapse, Fluxus, Delta, Arceus X и аналоги). Приравнивается к попытке сломать игру и вредит всему клану.</p>
+    </div>
+
+    <div class="rule danger">
+      <h3>8. Запрет на распространение <span class="badge">МУТ / БАН</span></h3>
+      <p>Нельзя отправлять в чат ссылки на скачивание такого ПО, инструкции по его установке, скрины-доказательства его использования «в шутку», рекламировать сервисы «бесплатных скриптов» и приглашать других это попробовать. Даже «просто показать другу» — нарушение.</p>
+    </div>
+
+    <div class="rule danger">
+      <h3>9. Запрет на продажу аккаунтов и RMT</h3>
+      <p>Продажа, обмен, дарение аккаунтов, покупка игровой валюты и предметов за реальные деньги (RMT) — запрещены. Это вредит и вам, и клану, и может привести к блокировке аккаунта разработчиками игры.</p>
+    </div>
+
+    <div class="rule danger">
+      <h3>10. Запрет на скам и фишинг <span class="badge">БАН НАВСЕГДА</span></h3>
+      <p>Любые попытки обмануть соклановцев, выманить аккаунт, пароль, Robux, донат или личные данные — исключение из клана без права вернуться. Ссылки на «бесплатные Robux» и подобные — автоматически наказываются.</p>
+    </div>
+  </section>
+
+  <section id="team">
+    <h2>Строительство и командная игра</h2>
+
+    <div class="rule">
+      <h3>11. Помощь соклановцам</h3>
+      <p>Просят помочь с фарм-машиной, механизмом, прохождением этапов или сборкой корабля — помогите, если есть возможность. Взаимовыручка — основа клана.</p>
+    </div>
+
+    <div class="rule">
+      <h3>12. Совместные заплывы и тесты</h3>
+      <p>Участвуя в команде, тестируя общие постройки, не ломайте чужие блоки, не мешайте и не трогайте чужие настройки без спроса. Общие проекты — общая ответственность.</p>
+    </div>
+
+    <div class="rule">
+      <h3>13. Делитесь опытом</h3>
+      <p>Нашли крутую схему, механику или фишку — расскажите соклановцам. Клан растёт, когда каждый делится знаниями, а не держит их при себе.</p>
+    </div>
+
+    <div class="rule">
+      <h3>14. Активность</h3>
+      <p>Старайтесь регулярно заходить в игру и участвовать в жизни клана. Если уезжаете, уходите в отпуск или просто не сможете играть долго — предупредите главу или замов заранее.</p>
+    </div>
+
+    <div class="rule">
+      <h3>15. Участие в ивентах <span class="badge info">БОНУС</span></h3>
+      <p>Клан периодически устраивает внутренние конкурсы: самый быстрый корабль, самая красивая постройка, фарм на скорость и другие. Участие приветствуется, но не обязательно — главное, чтобы вы были в курсе событий. Будет ивент «Золотая лихорадка», в котором кто больше всего заберёт денег — тот получит бонус в клане.</p>
+    </div>
+
+    <div class="rule">
+      <h3>16. Голос клана</h3>
+      <p>Предлагайте идеи, ивенты и улучшения. Клан — это не только глава, но и все его участники. Лучшие идеи попадают в клан.</p>
+    </div>
+
+    <div class="rule">
+      <h3>17. Долгое отсутствие без предупреждения</h3>
+      <p>Если участник пропадает надолго без предупреждения, он может быть понижен или исключён по решению офицеров — чтобы освободить место активным игрокам.</p>
+    </div>
+  </section>
+
+  <section id="ranks">
+    <h2>Система рангов и повышения</h2>
+
+    <div class="rule">
+      <h3>18. Как получить повышение</h3>
+      <p>• Активно помогать участникам клана.<br>
+      • Участвовать в клановых активностях, ивентах и строительстве.<br>
+      • Проявлять себя адекватным, надёжным и инициативным игроком.<br>
+      • Показывать стабильную активность и вклад в жизнь клана.</p>
+    </div>
+
+    <div class="rule">
+      <h3>19. Никакого выпрашивания рангов</h3>
+      <p>Просьбы выдать ранг «просто так» или «потому что я давно в клане» задерживают повышение. Всё даётся исключительно за заслуги и по решению главы и офицеров.</p>
+    </div>
+
+    <div class="rule">
+      <h3>20. Понижение в ранге</h3>
+      <p>Ранг может быть снят за неактивность, нарушение правил или недостойное поведение — без предварительного предупреждения, если проступок серьёзный.</p>
+    </div>
+  </section>
+
+  <section id="punish">
+    <h2>Наказания за нарушения</h2>
+    <div class="punishment">
+      <p>Использование запрещённого ПО — исключение из клана сразу, без права вернуться.</p>
+      <p>Распространение ссылок на читы / скрипты / RMT — исключение или длительный мут по решению офицеров.</p>
+      <p>Скам, фишинг, попытка украсть аккаунт — исключение сразу, с занесением в чёрный список.</p>
+      <p>Мат, спам, флуд, оскорбления — предупреждение → мут → исключение.</p>
+      <p>Мелкие нарушения и спорные ситуации — разбираются в Высшем Офицерском Составе или через суд клана.</p>
+    </div>
+  </section>
+
+  <footer>
+    ⚓ Клан «Стокгольм» · Build a Boat for Treasure<br>
+    Последнее обновление: <span id="date"></span>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('date').textContent = new Date().toLocaleDateString('ru-RU', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+</script>
+</body>
+</html>
