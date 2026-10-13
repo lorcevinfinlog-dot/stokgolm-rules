@@ -2,173 +2,284 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f1729">
 <title>Правила клана Стокгольм · 100 правил</title>
 <style>
+  /* ═══════════ ПЕРЕМЕННЫЕ ═══════════ */
+  :root {
+    --bg-1: #0f1729;
+    --bg-2: #1a2540;
+    --panel: rgba(20, 30, 54, 0.7);
+    --line: rgba(96, 180, 255, 0.25);
+    --line-soft: rgba(96, 180, 255, 0.15);
+    --text: #e8eefc;
+    --text-soft: #b0c4dc;
+    --text-dim: #8caac8;
+    --accent: #60b4ff;
+    --accent-hi: #a0c8ff;
+    --danger: #ff5a78;
+    --warn: #ffc85a;
+    --safe: #56d364;
+    --gold: #ffc85a;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --gap: clamp(8px, 1.5vw, 14px);
+    --pad: clamp(14px, 3vw, 32px);
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(135deg, #0f1729 0%, #1a2540 100%);
-    color: #e8eefc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    background-attachment: fixed;
+    color: var(--text);
     line-height: 1.6;
     min-height: 100vh;
-    padding: 20px;
+    min-height: 100dvh;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .container {
-    max-width: 900px;
+    width: 100%;
+    max-width: min(1100px, 100%);
     margin: 0 auto;
-    background: rgba(20, 30, 54, 0.7);
-    border: 1px solid rgba(96, 180, 255, 0.25);
-    border-radius: 20px;
-    padding: 32px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--pad);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   }
 
+  /* ═══════════ HEADER ═══════════ */
   header {
     text-align: center;
-    padding-bottom: 24px;
+    padding-bottom: clamp(14px, 2.5vw, 24px);
     border-bottom: 2px solid rgba(96, 180, 255, 0.3);
-    margin-bottom: 28px;
+    margin-bottom: clamp(14px, 2.5vw, 24px);
   }
 
   h1 {
-    font-size: 32px;
-    background: linear-gradient(135deg, #60b4ff, #a0c8ff);
+    font-size: clamp(22px, 4.5vw, 34px);
+    background: linear-gradient(135deg, var(--accent), var(--accent-hi));
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 8px;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-bottom: 6px;
+    line-height: 1.2;
+    word-wrap: break-word;
   }
 
   .subtitle {
-    color: #8caac8;
-    font-size: 14px;
+    color: var(--text-dim);
+    font-size: clamp(12px, 1.6vw, 14px);
   }
 
   .safety-badge {
     display: inline-block;
-    margin-top: 12px;
-    padding: 6px 16px;
+    margin-top: 10px;
+    padding: 5px 14px;
     border-radius: 20px;
     background: linear-gradient(135deg, rgba(63, 185, 80, 0.2), rgba(96, 180, 255, 0.15));
     border: 1px solid rgba(63, 185, 80, 0.4);
-    color: #56d364;
-    font-size: 12px;
+    color: var(--safe);
+    font-size: clamp(10px, 1.4vw, 12px);
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
+    text-align: center;
+    max-width: 100%;
   }
 
-  nav {
+  /* ═══════════ ВЕРХНИЕ ВКЛАДКИ (sticky) ═══════════ */
+  .top-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: clamp(14px, 2vw, 22px);
+    padding: 6px;
+    background: rgba(15, 23, 41, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 14px;
+    border: 1px solid var(--line-soft);
+    position: sticky;
+    top: max(6px, env(safe-area-inset-top));
+    z-index: 50;
+  }
+
+  .top-tab {
+    flex: 1;
+    padding: clamp(10px, 1.6vw, 14px) clamp(8px, 1.5vw, 16px);
+    border-radius: 10px;
+    font-size: clamp(13px, 1.6vw, 15px);
+    font-weight: 700;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-dim);
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.3px;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: inherit;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  @media (hover: hover) {
+    .top-tab:hover {
+      color: var(--accent-hi);
+      background: rgba(96, 180, 255, 0.08);
+    }
+  }
+
+  .top-tab.active {
+    background: linear-gradient(135deg, rgba(96, 180, 255, 0.25), rgba(96, 180, 255, 0.1));
+    border-color: rgba(96, 180, 255, 0.5);
+    color: var(--text);
+    box-shadow: 0 4px 16px rgba(96, 180, 255, 0.2);
+  }
+
+  .top-tab.ranks-tab.active {
+    background: linear-gradient(135deg, rgba(255, 200, 90, 0.25), rgba(255, 160, 60, 0.12));
+    border-color: rgba(255, 200, 90, 0.5);
+    box-shadow: 0 4px 16px rgba(255, 200, 90, 0.2);
+  }
+
+  .tab-panel { display: none; animation: fadeIn 0.25s ease; }
+  .tab-panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═══════════ ПОД-НАВИГАЦИЯ ═══════════ */
+  nav.subnav {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 32px;
-    padding: 16px;
+    gap: 6px;
+    margin-bottom: clamp(18px, 3vw, 30px);
+    padding: clamp(10px, 1.8vw, 16px);
     background: rgba(15, 23, 41, 0.6);
     border-radius: 12px;
-    border: 1px solid rgba(96, 180, 255, 0.15);
+    border: 1px solid var(--line-soft);
   }
 
-  nav a {
-    color: #60b4ff;
+  nav.subnav a {
+    color: var(--accent);
     text-decoration: none;
-    font-size: 13px;
-    padding: 6px 12px;
+    font-size: clamp(11px, 1.4vw, 13px);
+    padding: 8px 12px;
     border-radius: 8px;
     background: rgba(96, 180, 255, 0.1);
-    transition: all 0.2s;
+    transition: background 0.2s, color 0.2s;
     font-weight: 500;
+    white-space: nowrap;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  nav a:hover {
-    background: rgba(96, 180, 255, 0.25);
-    color: #a0c8ff;
+  @media (hover: hover) {
+    nav.subnav a:hover {
+      background: rgba(96, 180, 255, 0.25);
+      color: var(--accent-hi);
+    }
   }
 
-  nav a.highlight {
-    background: linear-gradient(135deg, rgba(255, 200, 90, 0.18), rgba(255, 160, 60, 0.12));
-    border: 1px solid rgba(255, 200, 90, 0.35);
-    color: #ffc85a;
-  }
-
-  nav a.highlight:hover {
-    background: linear-gradient(135deg, rgba(255, 200, 90, 0.3), rgba(255, 160, 60, 0.2));
-    color: #ffe0a0;
-  }
-
+  /* ═══════════ СЕКЦИИ ═══════════ */
   section {
-    margin-bottom: 36px;
+    margin-bottom: clamp(24px, 4vw, 36px);
+    scroll-margin-top: 80px;
   }
 
   h2 {
-    font-size: 20px;
-    color: #60b4ff;
-    margin-bottom: 16px;
+    font-size: clamp(16px, 2.2vw, 20px);
+    color: var(--accent);
+    margin-bottom: clamp(12px, 1.8vw, 16px);
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(96, 180, 255, 0.2);
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+    line-height: 1.3;
   }
 
   h2::before {
     content: '';
     width: 4px;
     height: 20px;
-    background: linear-gradient(180deg, #60b4ff, #3a7dcc);
+    background: linear-gradient(180deg, var(--accent), #3a7dcc);
     border-radius: 2px;
     flex-shrink: 0;
   }
 
+  /* ═══════════ ПРАВИЛА ═══════════ */
   .rule {
     background: rgba(15, 23, 41, 0.5);
     border-left: 3px solid rgba(96, 180, 255, 0.4);
-    border-radius: 10px;
-    padding: 16px 20px 22px;
-    margin-bottom: 12px;
-    transition: all 0.2s;
+    border-radius: var(--radius-sm);
+    padding: clamp(12px, 2vw, 16px) clamp(14px, 2vw, 20px) clamp(18px, 2.5vw, 24px);
+    margin-bottom: 10px;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
     position: relative;
   }
 
-  .rule:hover {
-    background: rgba(15, 23, 41, 0.8);
-    border-left-color: #60b4ff;
-    transform: translateX(4px);
+  @media (hover: hover) {
+    .rule:hover {
+      background: rgba(15, 23, 41, 0.85);
+      transform: translateX(4px);
+    }
   }
 
   .rule.danger { border-left-color: rgba(255, 90, 120, 0.6); }
-  .rule.danger:hover { border-left-color: #ff5a78; }
+  .rule.warn   { border-left-color: rgba(255, 200, 90, 0.6); }
+  .rule.safe   { border-left-color: rgba(63, 185, 80, 0.6); }
 
-  .rule.warn { border-left-color: rgba(255, 200, 90, 0.6); }
-  .rule.warn:hover { border-left-color: #ffc85a; }
-
-  .rule.safe { border-left-color: rgba(63, 185, 80, 0.6); }
-  .rule.safe:hover { border-left-color: #56d364; }
+  @media (hover: hover) {
+    .rule.danger:hover { border-left-color: var(--danger); }
+    .rule.warn:hover   { border-left-color: var(--warn); }
+    .rule.safe:hover   { border-left-color: var(--safe); }
+  }
 
   .rule h3 {
-    font-size: 15px;
-    color: #e8eefc;
-    margin-bottom: 6px;
+    font-size: clamp(14px, 1.6vw, 15px);
+    color: var(--text);
+    margin-bottom: 5px;
     font-weight: 600;
+    line-height: 1.35;
+    padding-right: 30px;
   }
 
   .rule.danger h3 { color: #ff9aad; }
-  .rule.warn h3 { color: #ffd98a; }
-  .rule.safe h3 { color: #9ce8a8; }
+  .rule.warn h3   { color: #ffd98a; }
+  .rule.safe h3   { color: #9ce8a8; }
 
   .rule p {
-    color: #b0c4dc;
-    font-size: 14px;
+    color: var(--text-soft);
+    font-size: clamp(13px, 1.5vw, 14px);
+    line-height: 1.55;
   }
 
-  /* ── Сокращённый номер правила в углу ── */
   .rule-num {
     position: absolute;
-    bottom: 8px;
+    bottom: 6px;
     right: 12px;
     font-size: 11px;
     font-weight: 700;
@@ -176,12 +287,14 @@
     opacity: 0.75;
     pointer-events: none;
     user-select: none;
-    color: #60b4ff;
+    -webkit-user-select: none;
+    color: var(--accent);
   }
-  .rule.danger .rule-num { color: #ff5a78; }
-  .rule.warn   .rule-num { color: #ffc85a; }
-  .rule.safe   .rule-num { color: #56d364; }
+  .rule.danger .rule-num { color: var(--danger); }
+  .rule.warn   .rule-num { color: var(--warn); }
+  .rule.safe   .rule-num { color: var(--safe); }
 
+  /* ═══════════ БЕЙДЖИ ═══════════ */
   .badge {
     display: inline-block;
     font-size: 10px;
@@ -189,85 +302,70 @@
     border-radius: 20px;
     background: rgba(255, 90, 120, 0.15);
     color: #ff9aad;
-    margin-left: 8px;
+    margin-left: 6px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     vertical-align: middle;
+    white-space: nowrap;
   }
 
-  .badge.info  { background: rgba(96, 180, 255, 0.15); color: #60b4ff; }
-  .badge.warn  { background: rgba(255, 200, 90, 0.15); color: #ffc85a; }
-  .badge.green { background: rgba(63, 185, 80, 0.15);  color: #56d364; }
+  .badge.info  { background: rgba(96, 180, 255, 0.15); color: var(--accent); }
+  .badge.warn  { background: rgba(255, 200, 90, 0.15); color: var(--warn); }
+  .badge.green { background: rgba(63, 185, 80, 0.15);  color: var(--safe); }
 
+  /* ═══════════ НАКАЗАНИЯ ═══════════ */
   .punishment {
     background: linear-gradient(135deg, rgba(255, 90, 120, 0.08), rgba(255, 90, 120, 0.02));
     border: 1px solid rgba(255, 90, 120, 0.25);
     border-radius: 12px;
-    padding: 20px;
+    padding: clamp(14px, 2vw, 20px);
   }
 
   .punishment p {
     color: #ffb8c5;
-    font-size: 14px;
+    font-size: clamp(13px, 1.5vw, 14px);
     padding: 8px 0;
     border-bottom: 1px dashed rgba(255, 90, 120, 0.15);
+    line-height: 1.55;
   }
 
   .punishment p:last-child { border-bottom: none; }
 
   .punishment p::before {
     content: '→ ';
-    color: #ff5a78;
+    color: var(--danger);
     font-weight: bold;
     margin-right: 4px;
   }
 
-  footer {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(96, 180, 255, 0.15);
-    color: #6a86a8;
-    font-size: 13px;
-  }
-
-  .counter {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 8px;
-    background: rgba(96, 180, 255, 0.15);
-    color: #60b4ff;
-    font-size: 12px;
-    font-weight: 600;
-    margin-left: 8px;
-  }
-
-  /* ═══════════ РАНГИ — иерархия ═══════════ */
+  /* ═══════════ РАНГИ ═══════════ */
   .rank-tier {
-    margin-bottom: 28px;
+    margin-bottom: clamp(18px, 2.5vw, 28px);
     border-radius: 14px;
-    padding: 18px;
+    padding: clamp(12px, 2vw, 18px);
     background: rgba(15, 23, 41, 0.5);
-    border: 1px solid rgba(96, 180, 255, 0.15);
+    border: 1px solid var(--line-soft);
   }
 
   .rank-tier-title {
-    font-size: 16px;
+    font-size: clamp(14px, 1.8vw, 16px);
     font-weight: 700;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding-bottom: 10px;
     border-bottom: 1px dashed rgba(96, 180, 255, 0.2);
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
     letter-spacing: 0.3px;
+    line-height: 1.35;
   }
 
-  .rank-tier.newbie  .rank-tier-title { color: #cd9a6a; border-bottom-color: rgba(205, 154, 106, 0.3); }
-  .rank-tier.officer .rank-tier-title { color: #b8c4d6; border-bottom-color: rgba(184, 196, 214, 0.3); }
-  .rank-tier.warlord .rank-tier-title { color: #ffc85a; border-bottom-color: rgba(255, 200, 90, 0.3); }
+  .rank-tier.newbie   .rank-tier-title { color: #cd9a6a; border-bottom-color: rgba(205, 154, 106, 0.3); }
+  .rank-tier.officer  .rank-tier-title { color: #b8c4d6; border-bottom-color: rgba(184, 196, 214, 0.3); }
+  .rank-tier.warlord  .rank-tier-title { color: var(--gold); border-bottom-color: rgba(255, 200, 90, 0.3); }
   .rank-tier.commander .rank-tier-title { color: #c08aff; border-bottom-color: rgba(192, 138, 255, 0.3); }
-  .rank-tier.leader  .rank-tier-title { color: #ff6b8a; border-bottom-color: rgba(255, 107, 138, 0.3); }
+  .rank-tier.leader   .rank-tier-title { color: #ff6b8a; border-bottom-color: rgba(255, 107, 138, 0.3); }
 
   .rank-tier.newbie   { background: linear-gradient(135deg, rgba(205, 154, 106, 0.06), rgba(15, 23, 41, 0.5)); border-color: rgba(205, 154, 106, 0.2); }
   .rank-tier.officer  { background: linear-gradient(135deg, rgba(184, 196, 214, 0.05), rgba(15, 23, 41, 0.5)); border-color: rgba(184, 196, 214, 0.2); }
@@ -278,37 +376,26 @@
   .rank-card {
     background: rgba(15, 23, 41, 0.55);
     border-left: 3px solid rgba(96, 180, 255, 0.4);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-bottom: 10px;
-    transition: all 0.2s;
+    border-radius: var(--radius-sm);
+    padding: clamp(10px, 1.6vw, 14px) clamp(12px, 1.8vw, 16px);
+    margin-bottom: 8px;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s;
   }
 
   .rank-card:last-child { margin-bottom: 0; }
 
-  .rank-card:hover {
-    background: rgba(15, 23, 41, 0.85);
-    transform: translateX(4px);
+  @media (hover: hover) {
+    .rank-card:hover {
+      background: rgba(15, 23, 41, 0.85);
+      transform: translateX(4px);
+    }
   }
 
   .rank-tier.newbie    .rank-card { border-left-color: rgba(205, 154, 106, 0.55); }
-  .rank-tier.newbie    .rank-card:hover { border-left-color: #cd9a6a; }
   .rank-tier.officer   .rank-card { border-left-color: rgba(184, 196, 214, 0.55); }
-  .rank-tier.officer   .rank-card:hover { border-left-color: #b8c4d6; }
   .rank-tier.warlord   .rank-card { border-left-color: rgba(255, 200, 90, 0.55); }
-  .rank-tier.warlord   .rank-card:hover { border-left-color: #ffc85a; }
   .rank-tier.commander .rank-card { border-left-color: rgba(192, 138, 255, 0.55); }
-  .rank-tier.commander .rank-card:hover { border-left-color: #c08aff; }
   .rank-tier.leader    .rank-card { border-left-color: rgba(255, 107, 138, 0.65); }
-  .rank-tier.leader    .rank-card:hover { border-left-color: #ff6b8a; }
-
-  .rank-card h4 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #e8eefc;
-    margin-bottom: 5px;
-    letter-spacing: 0.2px;
-  }
 
   .rank-tier.newbie    .rank-card h4 { color: #e8c69a; }
   .rank-tier.officer   .rank-card h4 { color: #d6dee8; }
@@ -316,24 +403,216 @@
   .rank-tier.commander .rank-card h4 { color: #d9b8ff; }
   .rank-tier.leader    .rank-card h4 { color: #ff9ab0; }
 
-  .rank-card p {
-    color: #b0c4dc;
-    font-size: 13.5px;
+  .rank-card h4 {
+    font-size: clamp(13px, 1.6vw, 14px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
   }
 
-  @media (max-width: 600px) {
-    body { padding: 10px; }
-    .container { padding: 20px; border-radius: 14px; }
-    h1 { font-size: 24px; }
-    h2 { font-size: 17px; }
-    nav a { font-size: 12px; padding: 5px 10px; }
-    .rule { padding: 12px 14px 20px; }
-    .rule-num { font-size: 10px; bottom: 6px; right: 10px; }
-    .rank-tier { padding: 14px; }
-    .rank-tier-title { font-size: 14px; }
-    .rank-card { padding: 10px 12px; }
-    .rank-card h4 { font-size: 13px; }
-    .rank-card p { font-size: 12.5px; }
+  .rank-card p {
+    color: var(--text-soft);
+    font-size: clamp(12.5px, 1.5vw, 13.5px);
+    line-height: 1.55;
+  }
+
+  /* ═══════════ СЧЁТЧИК ═══════════ */
+  .counter {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 8px;
+    background: rgba(96, 180, 255, 0.15);
+    color: var(--accent);
+    font-size: clamp(10px, 1.3vw, 12px);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ═══════════ ФУТЕР ═══════════ */
+  footer {
+    text-align: center;
+    margin-top: clamp(28px, 4vw, 40px);
+    padding-top: clamp(18px, 2.5vw, 24px);
+    border-top: 1px solid var(--line-soft);
+    color: #6a86a8;
+    font-size: clamp(11.5px, 1.4vw, 13px);
+    line-height: 1.7;
+  }
+
+  /* ═══════════ КНОПКА НАВЕРХ ═══════════ */
+  .to-top {
+    position: fixed;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(96, 180, 255, 0.4);
+    background: linear-gradient(135deg, rgba(96, 180, 255, 0.25), rgba(96, 180, 255, 0.1));
+    color: var(--accent);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s, background 0.2s;
+    z-index: 100;
+    touch-action: manipulation;
+    font-family: inherit;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  @media (hover: hover) {
+    .to-top:hover {
+      background: linear-gradient(135deg, rgba(96, 180, 255, 0.4), rgba(96, 180, 255, 0.2));
+      color: var(--accent-hi);
+    }
+  }
+
+  /* ═══════════ БОЛЬШИЕ ЭКРАНЫ (ПК) ═══════════ */
+  @media (min-width: 1024px) {
+    :root {
+      --pad: 36px;
+    }
+
+    nav.subnav a {
+      font-size: 13px;
+      padding: 7px 14px;
+    }
+
+    .rule {
+      padding: 18px 22px 26px;
+    }
+
+    .rule h3 {
+      padding-right: 40px;
+    }
+
+    .rule-num {
+      font-size: 12px;
+      bottom: 8px;
+      right: 14px;
+    }
+  }
+
+  /* ═══════════ ПЛАНШЕТЫ ═══════════ */
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .container {
+      max-width: 90%;
+    }
+  }
+
+  /* ═══════════ УЗКИЕ ТЕЛЕФОНЫ ═══════════ */
+  @media (max-width: 380px) {
+    :root {
+      --pad: 12px;
+    }
+
+    body {
+      padding:
+        max(6px, env(safe-area-inset-top))
+        max(6px, env(safe-area-inset-right))
+        max(6px, env(safe-area-inset-bottom))
+        max(6px, env(safe-area-inset-left));
+    }
+
+    h1 { font-size: 20px; }
+
+    .top-tab {
+      font-size: 12px;
+      padding: 10px 6px;
+    }
+
+    nav.subnav a {
+      font-size: 11px;
+      padding: 7px 10px;
+    }
+
+    .rule h3 {
+      padding-right: 26px;
+      font-size: 13.5px;
+    }
+
+    .rule p {
+      font-size: 12.5px;
+    }
+
+    .rule-num {
+      font-size: 10px;
+      right: 8px;
+    }
+  }
+
+  /* ═══════════ ЛАНДШАФТНЫЙ РЕЖИМ ТЕЛЕФОНА ═══════════ */
+  @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+    .top-tabs {
+      position: static;
+    }
+
+    header {
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .safety-badge {
+      display: none;
+    }
+  }
+
+  /* ═══════════ ПЕЧАТЬ ═══════════ */
+  @media print {
+    body {
+      background: white;
+      color: black;
+      padding: 0;
+    }
+
+    .top-tabs, .to-top, nav.subnav {
+      display: none;
+    }
+
+    .tab-panel {
+      display: block !important;
+    }
+
+    .container {
+      box-shadow: none;
+      border: none;
+      background: white;
+    }
+
+    .rule, .rank-card, .rank-tier {
+      background: white !important;
+      border: 1px solid #ccc;
+      color: black;
+    }
+
+    .rule p, .rank-card p {
+      color: #333;
+    }
+  }
+
+  /* ═══════════ УМЕНЬШЕННАЯ АНИМАЦИЯ ═══════════ */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>
 </head>
@@ -345,617 +624,199 @@
     <div class="safety-badge">🛡 САМЫЙ ЗАЩИЩЁННЫЙ КЛАН · 100 ПРАВИЛ</div>
   </header>
 
-  <nav>
-    <a href="#general">Общее (1–15)</a>
-    <a href="#chat">Чат (16–30)</a>
-    <a href="#forbidden">Запрещённое ПО (31–45)</a>
-    <a href="#team">Команда (46–60)</a>
-    <a href="#ranks">Правила рангов (61–72)</a>
-    <a href="#rank-list" class="highlight">🏆 Все ранги</a>
-    <a href="#security">Безопасность (73–84)</a>
-    <a href="#conflicts">Суд и конфликты (85–92)</a>
-    <a href="#punish">Наказания (93–100)</a>
-  </nav>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="general">
-    <h2>Общие положения <span class="counter">15 правил</span></h2>
-
-    <div class="rule">
-      <h3>1. Уважение превыше всего</h3>
-      <p>Оскорбления тиммейтов, токсичность, расизм, буллинг и любая травля строго запрещены — независимо от того, шутите вы или нет. Мы здесь, чтобы вместе строить крутые корабли, а не выяснять отношения.</p>
-    </div>
-
-    <div class="rule">
-      <h3>2. Конструктивная критика</h3>
-      <p>Критиковать постройки, механизмы и идеи можно и нужно — но только аргументированно и доброжелательно. Унижение автора, высмеивание и «а это тупо» — не критика, а нарушение.</p>
-    </div>
-
-    <div class="rule">
-      <h3>3. Никакой политики и религии</h3>
-      <p>Клан — про игру. Обсуждение политики, религии, национальных вопросов и любых горячих тем, способных вызвать споры, запрещено. Мы здесь ради Roblox.</p>
-    </div>
-
-    <div class="rule">
-      <h3>4. Уважение к администрации</h3>
-      <p>Решения главы, командоров и полководцев обязательны к исполнению. Если не согласен — не спорь в общем чате, а подай апелляцию через суд клана.</p>
-    </div>
-
-    <div class="rule">
-      <h3>5. Один клан — одна команда</h3>
-      <p>Не саботируйте общие проекты, не переманивайте соклановцев в другие кланы, не разжигайте смуту и не плетите интриги за спиной. Всё решается через ВОС.</p>
-    </div>
-
-    <div class="rule">
-      <h3>6. Правило одного аккаунта</h3>
-      <p>Один человек — один основной аккаунт в клане. Мультиаккаунты для выпрашивания бонусов, участия в ивентах с нескольких аккаунтов или обхода наказаний — запрещены.</p>
-    </div>
-
-    <div class="rule">
-      <h3>7. Адекватное поведение</h3>
-      <p>Мы принимаем всех, но требуем адекватности. Истерики, демонстративные уходы, постоянные претензии «к клану» и «к жизни» — не приветствуются.</p>
-    </div>
-
-    <div class="rule">
-      <h3>8. Дружелюбие к новичкам</h3>
-      <p>Каждый был новичком. Не высмеивайте за неопытность, не отказывайте в помощи демонстративно, не создавайте чувство лишнего.</p>
-    </div>
-
-    <div class="rule">
-      <h3>9. Никакого «кланового расизма»</h3>
-      <p>Оскорбления по признаку ранга («ты всего лишь Новичок»), пренебрежение к младшим рангам и унижение за низкий статус — запрещены. Ранг — это не повод унижать.</p>
-    </div>
-
-    <div class="rule">
-      <h3>10. Приватность важна</h3>
-      <p>Не выкладывайте в общий чат личные данные соклановцев (номер телефона, адрес, соцсети, фото) без их разрешения. Даже «в шутку».</p>
-    </div>
-
-    <div class="rule">
-      <h3>11. Не подстрекайте к нарушениям</h3>
-      <p>Призывы «а давайте все заспамим», «а давайте устроим бунт» и прочие провокации — наказываются как полноценное нарушение, даже если вы сами не нарушали.</p>
-    </div>
-
-    <div class="rule">
-      <h3>12. Дружеские подколы — в меру</h3>
-      <p>Лёгкие шутки между друзьями — это нормально. Но если человек попросил остановиться — остановитесь. Игнорирование «стоп» — токсичность.</p>
-    </div>
-
-    <div class="rule">
-      <h3>13. Уважайте чужие границы</h3>
-      <p>Не лезьте в чужие постройки, инвентари и механизмы без разрешения. Даже «просто посмотреть» — спросите сначала.</p>
-    </div>
-
-    <div class="rule">
-      <h3>14. Порядок в чате</h3>
-      <p>Не превращайте общий чат в личку. Личные переписки — в ЛС. Долгие споры по мелочам, «а ты кто такой», флуд — переносятся в отдельный чат.</p>
-    </div>
-
-    <div class="rule">
-      <h3>15. Клан — это семья</h3>
-      <p>Поддерживайте соклановцев в трудные моменты (игровые и реальные), помогайте новым, радуйтесь успехам других. Клан силён, когда каждому в нём хорошо.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="chat">
-    <h2>Общение в чате <span class="counter">15 правил</span></h2>
-
-    <div class="rule">
-      <h3>16. Основной язык — русский</h3>
-      <p>Общаемся на русском. Английский, украинский и другие языки — только для коротких фраз. Постоянное общение на чужом языке в общем чате — нарушение.</p>
-    </div>
-
-    <div class="rule warn">
-      <h3>17. Никакого мата <span class="badge warn">МУТ</span></h3>
-      <p>Обсценная лексика строго запрещена — даже с заменами букв (х*й, бл*ть), даже «в шутку», даже между друзьями. Фильтр настроен автоматически.</p>
-    </div>
-
-    <div class="rule warn">
-      <h3>18. Никакого капса <span class="badge warn">МУТ</span></h3>
-      <p>Сообщения типа «ПРИВЕТ КАК ДЕЛА КТО ХОЧЕТ ПОИГРАТЬ» — это капс. Если нужно что-то выделить — используйте *жирный* или _курсив_.</p>
-    </div>
-
-    <div class="rule warn">
-      <h3>19. Никакого флуда <span class="badge warn">МУТ</span></h3>
-      <p>Флуд = 5+ сообщений подряд за короткое время или длинные цепочки одинаковых символов (ааааааа, !!!!!!!!, ..........). Фильтр включён.</p>
-    </div>
-
-    <div class="rule warn">
-      <h3>20. Никакого спама <span class="badge warn">МУТ</span></h3>
-      <p>Спам = 3+ одинаковых сообщения подряд за 10 секунд. «Привет привет привет привет» — это спам.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>21. Никакой рекламы <span class="badge">БАН</span></h3>
-      <p>Реклама сторонних каналов, кланов, ботов, сайтов, «подписывайтесь на меня», «вступайте в мой клан» — запрещена без разрешения главы.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>22. Никаких NSFW-материалов <span class="badge">БАН</span></h3>
-      <p>Ссылки на 18+, шок-контент, кровавые материалы, скатологические картинки — моментальный бан без разбора.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>23. Никаких подозрительных ссылок <span class="badge">БАН</span></h3>
-      <p>Ссылки на непонятные сайты, сокращатели ссылок (bit.ly, clck.ru и др.), .exe-файлы, «открой это и посмотри» — моментальный бан.</p>
-    </div>
-
-    <div class="rule">
-      <h3>24. Голосовые сообщения</h3>
-      <p>Голосовые приветствуются, но не более 1 минуты. Если записываете длинное — напишите текстом или задайте вопрос. Спам голосовыми = мут.</p>
-    </div>
-
-    <div class="rule">
-      <h3>25. Стикеры и GIF</h3>
-      <p>Стикеры можно, но не 10 подряд. Запрещены стикеры с матом, NSFW, расизмом, оскорблениями. Спам стикерами = мут.</p>
-    </div>
-
-    <div class="rule">
-      <h3>26. Без «доксинга»</h3>
-      <p>Не пишите «я знаю где ты живёшь», не публикуйте скрины переписок без разрешения, не угрожайте. Угрозы — моментальный бан.</p>
-    </div>
-
-    <div class="rule">
-      <h3>27. Спойлеры и кликбейт</h3>
-      <p>Запрещены «СРОЧНО!!! ВСЕМ ЗАЙТИ», «ШОК-КОНТЕНТ», «ПОСЛЕДНИЙ ШАНС» и подобные приёмы привлечения внимания. Пишите по делу.</p>
-    </div>
-
-    <div class="rule">
-      <h3>28. Обсуждение читов</h3>
-      <p>Даже «просто спросить» про читы нельзя. Даже «а работает ли X?». Любое обсуждение = варн, повторное = мут, использование = бан.</p>
-    </div>
-
-    <div class="rule">
-      <h3>29. Упоминания @everyone / @here</h3>
-      <p>Пинги всех участников разрешены только администрации. Простые юзеры не используют @everyone/@here без причины. За злоупотребление — мут.</p>
-    </div>
-
-    <div class="rule">
-      <h3>30. Уважение тематики</h3>
-      <p>В тематических темах (например «Вопросы», «Новости», «Роли») — только по теме. Оффтоп переносится в общий чат или удаляется.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="forbidden">
-    <h2>Запрещённое ПО и мошенничество <span class="counter">15 правил</span></h2>
-
-    <div class="rule danger">
-      <h3>31. Читы и эксплойты <span class="badge">БАН</span></h3>
-      <p>Использование любого стороннего ПО для преимущества в игре: Krnl, Synapse, Fluxus, Delta, Arceus X, Hydrogen, любые executor'ы и скрипт-инжекторы — запрещены. Проверяется по логам и активности.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>32. Автофарм и боты <span class="badge">БАН</span></h3>
-      <p>Авто-кликеры, макросы, автофарм, скрипты для фарма денег и предметов — запрещены. Даже если вы «просто свернули игру, а оно само фармит».</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>33. Распространение ссылок на ПО <span class="badge">МУТ / БАН</span></h3>
-      <p>Ссылки на скачивание читов, инструкции по установке, «смотри что я нашёл» — запрещено. Даже «просто показать другу».</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>34. Скам и обман <span class="badge">БАН НАВСЕГДА</span></h3>
-      <p>Обман соклановцев (обещал помочь — кинул), невернутые долги, обмен «ты первый», фишинг аккаунтов — исключение навсегда с ЧС.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>35. Продажа аккаунтов <span class="badge">БАН</span></h3>
-      <p>Продажа, обмен, дарение аккаунтов Roblox — запрещено правилами самой Roblox. Нарушение карается исключением.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>36. RMT (Real Money Trading) <span class="badge">БАН</span></h3>
-      <p>Покупка игровой валюты, предметов, скинов, аккаунтов за реальные деньги — запрещена. Это может привести к блокировке всех участников сделки.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>37. «Бесплатные Robux» <span class="badge">БАН НАВСЕГДА</span></h3>
-      <p>Любые ссылки на «бесплатные робуксы», «генераторы валюты», «взлом Roblox» — фишинг. Моментальный бан без предупреждения.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>38. Кража аккаунтов <span class="badge">БАН НАВСЕГДА</span></h3>
-      <p>Попытки угадать пароль, «одолжи аккаунт на 5 минут», просьбы дать данные — исключение из клана навсегда + жалоба в Roblox.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>39. Фишинг и поддельные боты <span class="badge">БАН НАВСЕГДА</span></h3>
-      <p>Создание поддельных Telegram-ботов от имени клана, отправка ссылок на «официальную проверку» — бан навсегда, жалоба модерации Telegram.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>40. Читерские стримы <span class="badge">МУТ / БАН</span></h3>
-      <p>Стримить игру с читами, «показать как работает скрипт», рекламировать читерские каналы — запрещено. Мы не поддерживаем такое.</p>
-    </div>
-
-    <div class="rule">
-      <h3>41. Модификации разрешены только визуальные</h3>
-      <p>Если очень хочется модов — только визуальные (решейды, изменения цвета интерфейса). Никаких модов, дающих преимущество в игре.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>42. Не помогайте читерам <span class="badge">БАН</span></h3>
-      <p>Помощь в обходе фильтров, обучение читерству, передача читерских аккаунтов, «подмена ника» — соучастие. Наказывается как полноценное нарушение.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>43. Обход банов <span class="badge">БАН НАВСЕГДА</span></h3>
-      <p>Создание нового аккаунта после бана, попытки зайти через VPN, просьбы разбанить — исключение + блок по IP в Roblox.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>44. Обход фильтров бота <span class="badge">БАН</span></h3>
-      <p>Придумывание способов обойти фильтр мата, спама, флуда (замена букв, вставка символов, транслит) — нарушение. Фильтр умный, вычислит.</p>
-    </div>
-
-    <div class="rule danger">
-      <h3>45. Не разрушайте общий прогресс</h3>
-      <p>Умышленная порча общих кораблей, механизмов, схем, ресурсов клана — исключение + компенсация ущерба своим трудом (по решению ВОС).</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="team">
-    <h2>Строительство и командная игра <span class="counter">15 правил</span></h2>
-
-    <div class="rule">
-      <h3>46. Помогайте соклановцам</h3>
-      <p>Просят помочь с фарм-машиной, механизмом, прохождением или сборкой корабля — помогите. Взаимовыручка — основа клана.</p>
-    </div>
-
-    <div class="rule">
-      <h3>47. Не ломайте чужое</h3>
-      <p>В общих заплывах не ломайте чужие блоки, не трогайте чужие настройки без спроса. Общие проекты — общая ответственность.</p>
-    </div>
-
-    <div class="rule">
-      <h3>48. Уважайте чужой стиль</h3>
-      <p>Не критикуйте чужую эстетику постройки. Кому-то нравится минимализм, кому-то — барокко. Это дело вкуса.</p>
-    </div>
-
-    <div class="rule">
-      <h3>49. Делитесь опытом</h3>
-      <p>Нашли крутую схему, механику или фишку — расскажите. Клан растёт, когда каждый делится знаниями.</p>
-    </div>
-
-    <div class="rule">
-      <h3>50. Уважайте чужие идеи</h3>
-      <p>Не копируйте чужие постройки без разрешения. Если хотите повторить — спросите. Плагиат — плохо.</p>
-    </div>
-
-    <div class="rule">
-      <h3>51. Будьте активны</h3>
-      <p>Старайтесь регулярно заходить в игру и участвовать в жизни клана. Активность — это вклад в общий успех.</p>
-    </div>
-
-    <div class="rule">
-      <h3>52. Предупреждайте об отпуске</h3>
-      <p>Если уезжаете, уходите в отпуск или просто не сможете играть долго — предупредите главу или замов заранее. Иначе могут понизить.</p>
-    </div>
-
-    <div class="rule">
-      <h3>53. Участвуйте в ивентах <span class="badge green">БОНУС</span></h3>
-      <p>Клан устраивает конкурсы: самый быстрый корабль, самая красивая постройка, фарм на скорость. Участие приветствуется, но не обязательно.</p>
-    </div>
-
-    <div class="rule">
-      <h3>54. Бонусы за ивенты</h3>
-      <p>В ивентах типа «Золотая лихорадка» участники получают бонусы в клане: очки, монеты, повышение шанса на повышение ранга.</p>
-    </div>
-
-    <div class="rule">
-      <h3>55. Предлагайте идеи</h3>
-      <p>Клан — это не только глава. Идеи по ивентам, улучшениям, правилам принимаются. Лучшие идеи входят в жизнь клана.</p>
-    </div>
-
-    <div class="rule">
-      <h3>56. Не саботируйте общие проекты</h3>
-      <p>Если участвуете в общем проекте — участвуйте полноценно. Не уходите посреди работы, не мешайте другим, не делайте «назло».</p>
-    </div>
-
-    <div class="rule">
-      <h3>57. Долгое отсутствие без причины</h3>
-      <p>Если участник пропадает надолго без предупреждения (30+ дней) — понижение или исключение по решению офицеров.</p>
-    </div>
-
-    <div class="rule">
-      <h3>58. Тренировки клана</h3>
-      <p>Участвуйте в тренировках, если они проводятся. Это не обязательно, но помогает соклановцам расти и делает клан сильнее.</p>
-    </div>
-
-    <div class="rule">
-      <h3>59. Записи и реплеи</h3>
-      <p>Пишите крутые моменты, делитесь реплеями. Это поднимает дух клана и показывает новичкам, что мы умеем.</p>
-    </div>
-
-    <div class="rule">
-      <h3>60. Общие задачи — общая ответственность</h3>
-      <p>Если клан взял на себя большую задачу (ивент, стройку, рейд) — все, кто взялся, доводят до конца. Не бросайте на половине.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="ranks">
-    <h2>Система рангов и повышения <span class="counter">12 правил</span></h2>
-
-    <div class="rule">
-      <h3>61. Как получить повышение</h3>
-      <p>Активная помощь клану, участие в ивентах, адекватность, инициативность и вклад в жизнь клана. Всё это фиксируется.</p>
-    </div>
-
-    <div class="rule">
-      <h3>62. Ранги даются только за заслуги</h3>
-      <p>Никаких «выдай ранг, я же давно тут». Только за конкретный вклад: помощь новичкам, ивенты, рефералы, работа в проектах.</p>
-    </div>
-
-    <div class="rule">
-      <h3>63. Никакого выпрашивания</h3>
-      <p>Просьбы выдать ранг «просто так» — задерживают повышение. Мы это видим и учитываем как минус.</p>
-    </div>
-
-    <div class="rule">
-      <h3>64. Путь к офицеру</h3>
-      <p>Чтобы стать Мл. Офицером, нужно: проявить себя активным участником, помогать новичкам, участвовать в ивентах.</p>
-    </div>
-
-    <div class="rule">
-      <h3>65. Путь к полководцу</h3>
-      <p>Мл. Полководец — первая ступень реальных полномочий. Требуется: стабильная активность, доверие ВОС, экзамен на знание правил.</p>
-    </div>
-
-    <div class="rule">
-      <h3>66. Путь к командору</h3>
-      <p>Командор — высшее руководство. Требуется: длительный срок в клане, участие в ключевых решениях, доверие главы.</p>
-    </div>
-
-    <div class="rule">
-      <h3>67. Понижение — за неактивность</h3>
-      <p>30 дней без входа без предупреждения → понижение на 1 ранг. 60+ дней → пересмотр членства в клане.</p>
-    </div>
-
-    <div class="rule">
-      <h3>68. Понижение за нарушения</h3>
-      <p>Серьёзное нарушение → понижение на 1–3 ранга. Грубое (скам, обман, читы) → исключение из клана.</p>
-    </div>
-
-    <div class="rule">
-      <h3>69. Повышение через покупку</h3>
-      <p>От Мл. Офицера и выше ранги можно купить в теме «Роли» за очки рекрутинга. Очки зарабатываются приглашением жителей.</p>
-    </div>
-
-    <div class="rule">
-      <h3>70. Автоповышение по дням</h3>
-      <p>Новичок → Новичок II через 1 день в клане. Новичок II → Новичок III через 3 дня. Дальше — только за заслуги.</p>
-    </div>
-
-    <div class="rule">
-      <h3>71. Тег админа = права</h3>
-      <p>С ранга Мл. Полководец выдаётся тег админа + права модерировать чат. С Командора — полные права управления.</p>
-    </div>
-
-    <div class="rule">
-      <h3>72. Глава — неприкосновенен</h3>
-      <p>Решение главы — финальное. Обжаловать можно только в суде клана (при согласии ВОС).</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="rank-list">
-    <h2>🏆 Все ранги клана <span class="counter">14 рангов</span></h2>
-
-    <div class="rank-tier newbie">
-      <div class="rank-tier-title">🥉 Уровень «Новичок» — начальный состав</div>
-
-      <div class="rank-card">
-        <h4>Новичок</h4>
-        <p>Только вступил в клан. Знакомится с правилами, осваивается, изучает состав и атмосферу. Обязанностей минимум — главное быть адекватным и не нарушать правила.</p>
+  <div class="top-tabs">
+    <button class="top-tab active" data-tab="rules" type="button">📜 Правила</button>
+    <button class="top-tab ranks-tab" data-tab="ranks" type="button">🏆 Ранги</button>
+  </div>
+
+  <!-- ═══════════ ПРАВИЛА ═══════════ -->
+  <div class="tab-panel active" id="panel-rules">
+
+    <nav class="subnav">
+      <a href="#general">Общее (1–15)</a>
+      <a href="#chat">Чат (16–30)</a>
+      <a href="#forbidden">Запрещённое ПО (31–45)</a>
+      <a href="#team">Команда (46–60)</a>
+      <a href="#ranks-rules">Правила рангов (61–72)</a>
+      <a href="#security">Безопасность (73–84)</a>
+      <a href="#conflicts">Суд и конфликты (85–92)</a>
+      <a href="#punish">Наказания (93–100)</a>
+    </nav>
+
+    <section id="general">
+      <h2>Общие положения <span class="counter">15 правил</span></h2>
+      <div class="rule"><h3>1. Уважение превыше всего</h3><p>Оскорбления тиммейтов, токсичность, расизм, буллинг и любая травля строго запрещены — независимо от того, шутите вы или нет. Мы здесь, чтобы вместе строить крутые корабли, а не выяснять отношения.</p></div>
+      <div class="rule"><h3>2. Конструктивная критика</h3><p>Критиковать постройки, механизмы и идеи можно и нужно — но только аргументированно и доброжелательно. Унижение автора, высмеивание и «а это тупо» — не критика, а нарушение.</p></div>
+      <div class="rule"><h3>3. Никакой политики и религии</h3><p>Клан — про игру. Обсуждение политики, религии, национальных вопросов и любых горячих тем, способных вызвать споры, запрещено. Мы здесь ради Roblox.</p></div>
+      <div class="rule"><h3>4. Уважение к администрации</h3><p>Решения главы, командоров и полководцев обязательны к исполнению. Если не согласен — не спорь в общем чате, а подай апелляцию через суд клана.</p></div>
+      <div class="rule"><h3>5. Один клан — одна команда</h3><p>Не саботируйте общие проекты, не переманивайте соклановцев в другие кланы, не разжигайте смуту и не плетите интриги за спиной. Всё решается через ВОС.</p></div>
+      <div class="rule"><h3>6. Правило одного аккаунта</h3><p>Один человек — один основной аккаунт в клане. Мультиаккаунты для выпрашивания бонусов, участия в ивентах с нескольких аккаунтов или обхода наказаний — запрещены.</p></div>
+      <div class="rule"><h3>7. Адекватное поведение</h3><p>Мы принимаем всех, но требуем адекватности. Истерики, демонстративные уходы, постоянные претензии «к клану» и «к жизни» — не приветствуются.</p></div>
+      <div class="rule"><h3>8. Дружелюбие к новичкам</h3><p>Каждый был новичком. Не высмеивайте за неопытность, не отказывайте в помощи демонстративно, не создавайте чувство лишнего.</p></div>
+      <div class="rule"><h3>9. Никакого «кланового расизма»</h3><p>Оскорбления по признаку ранга («ты всего лишь Новичок»), пренебрежение к младшим рангам и унижение за низкий статус — запрещены. Ранг — это не повод унижать.</p></div>
+      <div class="rule"><h3>10. Приватность важна</h3><p>Не выкладывайте в общий чат личные данные соклановцев (номер телефона, адрес, соцсети, фото) без их разрешения. Даже «в шутку».</p></div>
+      <div class="rule"><h3>11. Не подстрекайте к нарушениям</h3><p>Призывы «а давайте все заспамим», «а давайте устроим бунт» и прочие провокации — наказываются как полноценное нарушение, даже если вы сами не нарушали.</p></div>
+      <div class="rule"><h3>12. Дружеские подколы — в меру</h3><p>Лёгкие шутки между друзьями — это нормально. Но если человек попросил остановиться — остановитесь. Игнорирование «стоп» — токсичность.</p></div>
+      <div class="rule"><h3>13. Уважайте чужие границы</h3><p>Не лезьте в чужие постройки, инвентари и механизмы без разрешения. Даже «просто посмотреть» — спросите сначала.</p></div>
+      <div class="rule"><h3>14. Порядок в чате</h3><p>Не превращайте общий чат в личку. Личные переписки — в ЛС. Долгие споры по мелочам, «а ты кто такой», флуд — переносятся в отдельный чат.</p></div>
+      <div class="rule"><h3>15. Клан — это семья</h3><p>Поддерживайте соклановцев в трудные моменты (игровые и реальные), помогайте новым, радуйтесь успехам других. Клан силён, когда каждому в нём хорошо.</p></div>
+    </section>
+
+    <section id="chat">
+      <h2>Общение в чате <span class="counter">15 правил</span></h2>
+      <div class="rule"><h3>16. Основной язык — русский</h3><p>Общаемся на русском. Английский, украинский и другие языки — только для коротких фраз. Постоянное общение на чужом языке в общем чате — нарушение.</p></div>
+      <div class="rule warn"><h3>17. Никакого мата <span class="badge warn">МУТ</span></h3><p>Обсценная лексика строго запрещена — даже с заменами букв (х*й, бл*ть), даже «в шутку», даже между друзьями. Фильтр настроен автоматически.</p></div>
+      <div class="rule warn"><h3>18. Никакого капса <span class="badge warn">МУТ</span></h3><p>Сообщения типа «ПРИВЕТ КАК ДЕЛА КТО ХОЧЕТ ПОИГРАТЬ» — это капс. Если нужно что-то выделить — используйте *жирный* или _курсив_.</p></div>
+      <div class="rule warn"><h3>19. Никакого флуда <span class="badge warn">МУТ</span></h3><p>Флуд = 5+ сообщений подряд за короткое время или длинные цепочки одинаковых символов (ааааааа, !!!!!!!!, ..........). Фильтр включён.</p></div>
+      <div class="rule warn"><h3>20. Никакого спама <span class="badge warn">МУТ</span></h3><p>Спам = 3+ одинаковых сообщения подряд за 10 секунд. «Привет привет привет привет» — это спам.</p></div>
+      <div class="rule danger"><h3>21. Никакой рекламы <span class="badge">БАН</span></h3><p>Реклама сторонних каналов, кланов, ботов, сайтов, «подписывайтесь на меня», «вступайте в мой клан» — запрещена без разрешения главы.</p></div>
+      <div class="rule danger"><h3>22. Никаких NSFW-материалов <span class="badge">БАН</span></h3><p>Ссылки на 18+, шок-контент, кровавые материалы, скатологические картинки — моментальный бан без разбора.</p></div>
+      <div class="rule danger"><h3>23. Никаких подозрительных ссылок <span class="badge">БАН</span></h3><p>Ссылки на непонятные сайты, сокращатели ссылок (bit.ly, clck.ru и др.), .exe-файлы, «открой это и посмотри» — моментальный бан.</p></div>
+      <div class="rule"><h3>24. Голосовые сообщения</h3><p>Голосовые приветствуются, но не более 1 минуты. Если записываете длинное — напишите текстом или задайте вопрос. Спам голосовыми = мут.</p></div>
+      <div class="rule"><h3>25. Стикеры и GIF</h3><p>Стикеры можно, но не 10 подряд. Запрещены стикеры с матом, NSFW, расизмом, оскорблениями. Спам стикерами = мут.</p></div>
+      <div class="rule"><h3>26. Без «доксинга»</h3><p>Не пишите «я знаю где ты живёшь», не публикуйте скрины переписок без разрешения, не угрожайте. Угрозы — моментальный бан.</p></div>
+      <div class="rule"><h3>27. Спойлеры и кликбейт</h3><p>Запрещены «СРОЧНО!!! ВСЕМ ЗАЙТИ», «ШОК-КОНТЕНТ», «ПОСЛЕДНИЙ ШАНС» и подобные приёмы привлечения внимания. Пишите по делу.</p></div>
+      <div class="rule"><h3>28. Обсуждение читов</h3><p>Даже «просто спросить» про читы нельзя. Даже «а работает ли X?». Любое обсуждение = варн, повторное = мут, использование = бан.</p></div>
+      <div class="rule"><h3>29. Упоминания @everyone / @here</h3><p>Пинги всех участников разрешены только администрации. Простые юзеры не используют @everyone/@here без причины. За злоупотребление — мут.</p></div>
+      <div class="rule"><h3>30. Уважение тематики</h3><p>В тематических темах (например «Вопросы», «Новости», «Роли») — только по теме. Оффтоп переносится в общий чат или удаляется.</p></div>
+    </section>
+
+    <section id="forbidden">
+      <h2>Запрещённое ПО и мошенничество <span class="counter">15 правил</span></h2>
+      <div class="rule danger"><h3>31. Читы и эксплойты <span class="badge">БАН</span></h3><p>Использование любого стороннего ПО для преимущества в игре: Krnl, Synapse, Fluxus, Delta, Arceus X, Hydrogen, любые executor'ы и скрипт-инжекторы — запрещены. Проверяется по логам и активности.</p></div>
+      <div class="rule danger"><h3>32. Автофарм и боты <span class="badge">БАН</span></h3><p>Авто-кликеры, макросы, автофарм, скрипты для фарма денег и предметов — запрещены. Даже если вы «просто свернули игру, а оно само фармит».</p></div>
+      <div class="rule danger"><h3>33. Распространение ссылок на ПО <span class="badge">МУТ / БАН</span></h3><p>Ссылки на скачивание читов, инструкции по установке, «смотри что я нашёл» — запрещено. Даже «просто показать другу».</p></div>
+      <div class="rule danger"><h3>34. Скам и обман <span class="badge">БАН НАВСЕГДА</span></h3><p>Обман соклановцев (обещал помочь — кинул), невернутые долги, обмен «ты первый», фишинг аккаунтов — исключение навсегда с ЧС.</p></div>
+      <div class="rule danger"><h3>35. Продажа аккаунтов <span class="badge">БАН</span></h3><p>Продажа, обмен, дарение аккаунтов Roblox — запрещено правилами самой Roblox. Нарушение карается исключением.</p></div>
+      <div class="rule danger"><h3>36. RMT (Real Money Trading) <span class="badge">БАН</span></h3><p>Покупка игровой валюты, предметов, скинов, аккаунтов за реальные деньги — запрещена. Это может привести к блокировке всех участников сделки.</p></div>
+      <div class="rule danger"><h3>37. «Бесплатные Robux» <span class="badge">БАН НАВСЕГДА</span></h3><p>Любые ссылки на «бесплатные робуксы», «генераторы валюты», «взлом Roblox» — фишинг. Моментальный бан без предупреждения.</p></div>
+      <div class="rule danger"><h3>38. Кража аккаунтов <span class="badge">БАН НАВСЕГДА</span></h3><p>Попытки угадать пароль, «одолжи аккаунт на 5 минут», просьбы дать данные — исключение из клана навсегда + жалоба в Roblox.</p></div>
+      <div class="rule danger"><h3>39. Фишинг и поддельные боты <span class="badge">БАН НАВСЕГДА</span></h3><p>Создание поддельных Telegram-ботов от имени клана, отправка ссылок на «официальную проверку» — бан навсегда, жалоба модерации Telegram.</p></div>
+      <div class="rule danger"><h3>40. Читерские стримы <span class="badge">МУТ / БАН</span></h3><p>Стримить игру с читами, «показать как работает скрипт», рекламировать читерские каналы — запрещено. Мы не поддерживаем такое.</p></div>
+      <div class="rule"><h3>41. Модификации разрешены только визуальные</h3><p>Если очень хочется модов — только визуальные (решейды, изменения цвета интерфейса). Никаких модов, дающих преимущество в игре.</p></div>
+      <div class="rule danger"><h3>42. Не помогайте читерам <span class="badge">БАН</span></h3><p>Помощь в обходе фильтров, обучение читерству, передача читерских аккаунтов, «подмена ника» — соучастие. Наказывается как полноценное нарушение.</p></div>
+      <div class="rule danger"><h3>43. Обход банов <span class="badge">БАН НАВСЕГДА</span></h3><p>Создание нового аккаунта после бана, попытки зайти через VPN, просьбы разбанить — исключение + блок по IP в Roblox.</p></div>
+      <div class="rule danger"><h3>44. Обход фильтров бота <span class="badge">БАН</span></h3><p>Придумывание способов обойти фильтр мата, спама, флуда (замена букв, вставка символов, транслит) — нарушение. Фильтр умный, вычислит.</p></div>
+      <div class="rule danger"><h3>45. Не разрушайте общий прогресс</h3><p>Умышленная порча общих кораблей, механизмов, схем, ресурсов клана — исключение + компенсация ущерба своим трудом (по решению ВОС).</p></div>
+    </section>
+
+    <section id="team">
+      <h2>Строительство и командная игра <span class="counter">15 правил</span></h2>
+      <div class="rule"><h3>46. Помогайте соклановцам</h3><p>Просят помочь с фарм-машиной, механизмом, прохождением или сборкой корабля — помогите. Взаимовыручка — основа клана.</p></div>
+      <div class="rule"><h3>47. Не ломайте чужое</h3><p>В общих заплывах не ломайте чужие блоки, не трогайте чужие настройки без спроса. Общие проекты — общая ответственность.</p></div>
+      <div class="rule"><h3>48. Уважайте чужой стиль</h3><p>Не критикуйте чужую эстетику постройки. Кому-то нравится минимализм, кому-то — барокко. Это дело вкуса.</p></div>
+      <div class="rule"><h3>49. Делитесь опытом</h3><p>Нашли крутую схему, механику или фишку — расскажите. Клан растёт, когда каждый делится знаниями.</p></div>
+      <div class="rule"><h3>50. Уважайте чужие идеи</h3><p>Не копируйте чужие постройки без разрешения. Если хотите повторить — спросите. Плагиат — плохо.</p></div>
+      <div class="rule"><h3>51. Будьте активны</h3><p>Старайтесь регулярно заходить в игру и участвовать в жизни клана. Активность — это вклад в общий успех.</p></div>
+      <div class="rule"><h3>52. Предупреждайте об отпуске</h3><p>Если уезжаете, уходите в отпуск или просто не сможете играть долго — предупредите главу или замов заранее. Иначе могут понизить.</p></div>
+      <div class="rule"><h3>53. Участвуйте в ивентах <span class="badge green">БОНУС</span></h3><p>Клан устраивает конкурсы: самый быстрый корабль, самая красивая постройка, фарм на скорость. Участие приветствуется, но не обязательно.</p></div>
+      <div class="rule"><h3>54. Бонусы за ивенты</h3><p>В ивентах типа «Золотая лихорадка» участники получают бонусы в клане: очки, монеты, повышение шанса на повышение ранга.</p></div>
+      <div class="rule"><h3>55. Предлагайте идеи</h3><p>Клан — это не только глава. Идеи по ивентам, улучшениям, правилам принимаются. Лучшие идеи входят в жизнь клана.</p></div>
+      <div class="rule"><h3>56. Не саботируйте общие проекты</h3><p>Если участвуете в общем проекте — участвуйте полноценно. Не уходите посреди работы, не мешайте другим, не делайте «назло».</p></div>
+      <div class="rule"><h3>57. Долгое отсутствие без причины</h3><p>Если участник пропадает надолго без предупреждения (30+ дней) — понижение или исключение по решению офицеров.</p></div>
+      <div class="rule"><h3>58. Тренировки клана</h3><p>Участвуйте в тренировках, если они проводятся. Это не обязательно, но помогает соклановцам расти и делает клан сильнее.</p></div>
+      <div class="rule"><h3>59. Записи и реплеи</h3><p>Пишите крутые моменты, делитесь реплеями. Это поднимает дух клана и показывает новичкам, что мы умеем.</p></div>
+      <div class="rule"><h3>60. Общие задачи — общая ответственность</h3><p>Если клан взял на себя большую задачу (ивент, стройку, рейд) — все, кто взялся, доводят до конца. Не бросайте на половине.</p></div>
+    </section>
+
+    <section id="ranks-rules">
+      <h2>Система рангов и повышения <span class="counter">12 правил</span></h2>
+      <div class="rule"><h3>61. Как получить повышение</h3><p>Активная помощь клану, участие в ивентах, адекватность, инициативность и вклад в жизнь клана. Всё это фиксируется.</p></div>
+      <div class="rule"><h3>62. Ранги даются только за заслуги</h3><p>Никаких «выдай ранг, я же давно тут». Только за конкретный вклад: помощь новичкам, ивенты, рефералы, работа в проектах.</p></div>
+      <div class="rule"><h3>63. Никакого выпрашивания</h3><p>Просьбы выдать ранг «просто так» — задерживают повышение. Мы это видим и учитываем как минус.</p></div>
+      <div class="rule"><h3>64. Путь к офицеру</h3><p>Чтобы стать Мл. Офицером, нужно: проявить себя активным участником, помогать новичкам, участвовать в ивентах.</p></div>
+      <div class="rule"><h3>65. Путь к полководцу</h3><p>Мл. Полководец — первая ступень реальных полномочий. Требуется: стабильная активность, доверие ВОС, экзамен на знание правил.</p></div>
+      <div class="rule"><h3>66. Путь к командору</h3><p>Командор — высшее руководство. Требуется: длительный срок в клане, участие в ключевых решениях, доверие главы.</p></div>
+      <div class="rule"><h3>67. Понижение — за неактивность</h3><p>30 дней без входа без предупреждения → понижение на 1 ранг. 60+ дней → пересмотр членства в клане.</p></div>
+      <div class="rule"><h3>68. Понижение за нарушения</h3><p>Серьёзное нарушение → понижение на 1–3 ранга. Грубое (скам, обман, читы) → исключение из клана.</p></div>
+      <div class="rule"><h3>69. Повышение через покупку</h3><p>От Мл. Офицера и выше ранги можно купить в теме «Роли» за очки рекрутинга. Очки зарабатываются приглашением жителей.</p></div>
+      <div class="rule"><h3>70. Автоповышение по дням</h3><p>Новичок → Новичок II через 1 день в клане. Новичок II → Новичок III через 3 дня. Дальше — только за заслуги.</p></div>
+      <div class="rule"><h3>71. Тег админа = права</h3><p>С ранга Мл. Полководец выдаётся тег админа + права модерировать чат. С Командора — полные права управления.</p></div>
+      <div class="rule"><h3>72. Глава — неприкосновенен</h3><p>Решение главы — финальное. Обжаловать можно только в суде клана (при согласии ВОС).</p></div>
+    </section>
+
+    <section id="security">
+      <h2>Безопасность и защита <span class="counter">12 правил</span></h2>
+      <div class="rule safe"><h3>73. Не давайте личные данные <span class="badge green">ЗАЩИТА</span></h3><p>Никогда не давайте адрес, номер телефона, номер карты, данные от соцсетей соклановцам — даже тем, с кем хорошо общаетесь. Мошенники всегда выглядят дружелюбно.</p></div>
+      <div class="rule safe"><h3>74. Двухфакторка обязательна <span class="badge green">ЗАЩИТА</span></h3><p>Включите двухфакторную аутентификацию на аккаунте Roblox и Telegram. Это защитит вас и клан от взлома.</p></div>
+      <div class="rule safe"><h3>75. Проверяйте ссылки <span class="badge green">ЗАЩИТА</span></h3><p>Прежде чем открыть ссылку от соклановца — проверьте её. Если просят «зайти на сайт и ввести пароль» — это фишинг, даже если ссылка пришла от друга.</p></div>
+      <div class="rule safe"><h3>76. Пароль не повторяйте <span class="badge green">ЗАЩИТА</span></h3><p>Не используйте один и тот же пароль на разных сайтах. Если один взломают — взломают все.</p></div>
+      <div class="rule safe"><h3>77. Сообщайте о подозрительном <span class="badge green">ЗАЩИТА</span></h3><p>Если заметили подозрительное поведение (странные ссылки, попытки узнать данные, фишинг) — сразу сообщите главе или замам в ЛС.</p></div>
+      <div class="rule safe"><h3>78. Бот не спрашивает пароли <span class="badge green">ЗАЩИТА</span></h3><p>Клан-бот никогда не спросит пароль, номер карты, CVV или любые другие секретные данные. Если кто-то «от имени бота» спрашивает — это мошенник.</p></div>
+      <div class="rule safe"><h3>79. Не переходите по «подаркам» <span class="badge green">ЗАЩИТА</span></h3><p>«Забери 10 000 Robux бесплатно», «выиграл в лотерею», «тебе подарок от клана» — всегда проверяйте у ВОС. Скорее всего это скам.</p></div>
+      <div class="rule safe"><h3>80. Регулярно меняйте пароль <span class="badge green">ЗАЩИТА</span></h3><p>Раз в 3–6 месяцев меняйте пароли на важных аккаунтах. Это просто и сильно повышает безопасность.</p></div>
+      <div class="rule safe"><h3>81. Не устанавливайте .exe <span class="badge green">ЗАЩИТА</span></h3><p>Никогда не запускайте .exe/.msi/.bat от соклановцев, «для улучшения игры» или «для Robux». Особенно — от имени «Krnl.exe», «Roblox Hack.exe» и подобных.</p></div>
+      <div class="rule safe"><h3>82. Проверяйте бота <span class="badge green">ЗАЩИТА</span></h3><p>Официальный бот клана — только один. Все остальные «клан-боты» с похожими названиями — фейки. Проверяйте @username у ВОС.</p></div>
+      <div class="rule safe"><h3>83. Не одалживайте аккаунт <span class="badge green">ЗАЩИТА</span></h3><p>Никогда не давайте аккаунт Roblox или Telegram «поиграть», «на 5 минут», «проверить» — даже лучшим друзьям. Даже ВОС. Никому.</p></div>
+      <div class="rule safe"><h3>84. Сообщайте о взломе <span class="badge green">ЗАЩИТА</span></h3><p>Если вас взломали — сразу сообщите клану. Возможно, злоумышленник уже пишет с вашего имени другим соклановцам.</p></div>
+    </section>
+
+    <section id="conflicts">
+      <h2>Суд и конфликты <span class="counter">8 правил</span></h2>
+      <div class="rule"><h3>85. Спор — в суд</h3><p>Возник конфликт с соклановцем или админом — пишите заявление в суд клана. Публичные разборки в общем чате запрещены.</p></div>
+      <div class="rule"><h3>86. Суд беспристрастен</h3><p>Судья клана разбирает дела по фактам: сообщения, действия, скрины. Дружба с кем-то не влияет на приговор.</p></div>
+      <div class="rule"><h3>87. Апелляция возможна</h3><p>Если считаете приговор суда несправедливым — можно подать апелляцию главе. Решение главы — финальное.</p></div>
+      <div class="rule"><h3>88. Ложные жалобы наказываются</h3><p>Если вы подаёте заведомо ложную жалобу с целью оклеветать соклановца — это нарушение, наказывается как клевета.</p></div>
+      <div class="rule"><h3>89. Показания свидетелей</h3><p>В суде можно предоставить свидетелей (скрины, цитаты других участников). Ложные показания — тоже нарушение.</p></div>
+      <div class="rule"><h3>90. Наказание — не месть</h3><p>Если вас наказали — не начинайте мстить в ответ, не срывайтесь на других соклановцах. Разбирайтесь через суд.</p></div>
+      <div class="rule"><h3>91. Бытовые споры решаем сами</h3><p>Мелкие споры («ты не дал мне блок», «ты влез в мою постройку») — решайте сами или через офицеров. Суд — для серьёзных дел.</p></div>
+      <div class="rule"><h3>92. Уважение к приговору</h3><p>Даже если не согласны — не оскорбляйте судью, не угрожайте, не саботируйте. Приговор есть приговор.</p></div>
+    </section>
+
+    <section id="punish">
+      <h2>Наказания за нарушения <span class="counter">8 категорий</span></h2>
+      <div class="punishment">
+        <p><b>Читы, эксплойты, автофарм, скрипты</b> — исключение из клана сразу, без права вернуться. Жалоба в Roblox.</p>
+        <p><b>Ссылки на читы / RMT / продажа аккаунтов</b> — исключение или длительный мут (2 дня) по решению офицеров.</p>
+        <p><b>Скам, фишинг, кража аккаунтов, обман соклановцев</b> — исключение сразу с занесением в чёрный список клана.</p>
+        <p><b>Мат, спам, флуд, капс, реклама</b> — предупреждение → мут (2 часа) → мут (5 дней) → исключение.</p>
+        <p><b>NSFW-контент, шок-контент, оскорбления по признаку</b> — моментальный бан без разбора.</p>
+        <p><b>Токсичность, буллинг, травля</b> — предупреждение → мут → исключение при повторе.</p>
+        <p><b>Ложные жалобы, клевета, фейковые свидетели</b> — варн, при повторе — мут на 1 день.</p>
+        <p><b>Мелкие нарушения и спорные ситуации</b> — разбираются в Высшем Офицерском Составе или через суд клана.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════ РАНГИ ═══════════ -->
+  <div class="tab-panel" id="panel-ranks">
+    <section id="rank-list">
+      <h2>🏆 Все ранги клана <span class="counter">14 рангов</span></h2>
+
+      <div class="rank-tier newbie">
+        <div class="rank-tier-title">🥉 Уровень «Новичок» — начальный состав</div>
+        <div class="rank-card"><h4>Новичок</h4><p>Только вступил в клан. Знакомится с правилами, осваивается, изучает состав и атмосферу. Обязанностей минимум — главное быть адекватным и не нарушать правила.</p></div>
+        <div class="rank-card"><h4>Новичок II</h4><p>Освоился, знает правила. Начинает помогать соклановцам и участвовать в общих заплывах. Показывает, что готов быть частью команды.</p></div>
+        <div class="rank-card"><h4>Новичок III</h4><p>Уверенный участник. Активно помогает новичкам, участвует в ивентах и стройках. Кандидат на повышение до младшего офицера.</p></div>
       </div>
 
-      <div class="rank-card">
-        <h4>Новичок II</h4>
-        <p>Освоился, знает правила. Начинает помогать соклановцам и участвовать в общих заплывах. Показывает, что готов быть частью команды.</p>
+      <div class="rank-tier officer">
+        <div class="rank-tier-title">🥈 Уровень «Офицер» — помощники руководства</div>
+        <div class="rank-card"><h4>Мл. Офицер</h4><p>Помощник в чате. Может подсказать новичкам, напомнить о правилах, помочь разобраться в клановой жизни. Замечания делает вежливо, без угроз и наказаний. О нарушениях докладывает старшим.</p></div>
+        <div class="rank-card"><h4>Офицер</h4><p>Следит за порядком в чате и помогает новичкам адаптироваться. Может напомнить о правилах и сообщить о нарушителе вышестоящим. Сам предупреждения и муты не выдаёт — это решение полководцев и выше.</p></div>
+        <div class="rank-card"><h4>Ст. Офицер</h4><p>Опытный помощник. Курирует младших офицеров, помогает решать мелкие споры, следит за активностью новичков. Может предложить наказание нарушителю, но решение принимает полководец или выше.</p></div>
       </div>
 
-      <div class="rank-card">
-        <h4>Новичок III</h4>
-        <p>Уверенный участник. Активно помогает новичкам, участвует в ивентах и стройках. Кандидат на повышение до младшего офицера.</p>
-      </div>
-    </div>
-
-    <div class="rank-tier officer">
-      <div class="rank-tier-title">🥈 Уровень «Офицер» — помощники руководства</div>
-
-      <div class="rank-card">
-        <h4>Мл. Офицер</h4>
-        <p>Помощник в чате. Может подсказать новичкам, напомнить о правилах, помочь разобраться в клановой жизни. Замечания делает вежливо, без угроз и наказаний. О нарушениях докладывает старшим.</p>
+      <div class="rank-tier warlord">
+        <div class="rank-tier-title">🥇 Уровень «Полководец» — командный состав</div>
+        <div class="rank-card"><h4>Мл. Полководец</h4><p>Первый уровень, у которого есть реальные полномочия. Может выдавать предупреждения и временные муты за нарушения, помогать офицерам в организации порядка.</p></div>
+        <div class="rank-card"><h4>Полководец</h4><p>Организует ивенты и командные заплывы, ведёт общие проекты. Имеет право исключать нарушителей и участвовать в решениях по составу клана.</p></div>
+        <div class="rank-card"><h4>Ст. Полководец</h4><p>Главный по ивентам и командной игре. Управляет офицерским составом, решает спорные ситуации, участвует в стратегических решениях клана.</p></div>
       </div>
 
-      <div class="rank-card">
-        <h4>Офицер</h4>
-        <p>Следит за порядком в чате и помогает новичкам адаптироваться. Может напомнить о правилах и сообщить о нарушителе вышестоящим. Сам предупреждения и муты не выдаёт — это решение полководцев и выше.</p>
+      <div class="rank-tier commander">
+        <div class="rank-tier-title">👑 Уровень «Командор» — высшее руководство</div>
+        <div class="rank-card"><h4>Мл. Командор</h4><p>Помогает главе в управлении кланом. Курирует весь офицерский и полководческий состав, утверждает крупные ивенты и внутренние решения.</p></div>
+        <div class="rank-card"><h4>Командор</h4><p>Заместитель главы. Полный доступ к управлению кланом, может исключать и повышать участников, решать конфликты на высшем уровне.</p></div>
+        <div class="rank-card"><h4>Ст. Командор</h4><p>Первый заместитель главы. Принимает решения от имени главы в его отсутствие, курирует всё руководство, отвечает за стабильность и порядок в клане.</p></div>
       </div>
 
-      <div class="rank-card">
-        <h4>Ст. Офицер</h4>
-        <p>Опытный помощник. Курирует младших офицеров, помогает решать мелкие споры, следит за активностью новичков. Может предложить наказание нарушителю, но решение принимает полководец или выше.</p>
+      <div class="rank-tier leader">
+        <div class="rank-tier-title">🔱 Глава клана</div>
+        <div class="rank-card"><h4>Тег-СФРВ.Глав</h4><p>Верховный лидер клана. Финальное слово во всех решениях: приём, исключение, повышения, ивенты, правила. Имеет право менять состав, ранги и внутреннюю политику клана. Несёт полную ответственность за клан.</p></div>
       </div>
-    </div>
-
-    <div class="rank-tier warlord">
-      <div class="rank-tier-title">🥇 Уровень «Полководец» — командный состав</div>
-
-      <div class="rank-card">
-        <h4>Мл. Полководец</h4>
-        <p>Первый уровень, у которого есть реальные полномочия. Может выдавать предупреждения и временные муты за нарушения, помогать офицерам в организации порядка.</p>
-      </div>
-
-      <div class="rank-card">
-        <h4>Полководец</h4>
-        <p>Организует ивенты и командные заплывы, ведёт общие проекты. Имеет право исключать нарушителей и участвовать в решениях по составу клана.</p>
-      </div>
-
-      <div class="rank-card">
-        <h4>Ст. Полководец</h4>
-        <p>Главный по ивентам и командной игре. Управляет офицерским составом, решает спорные ситуации, участвует в стратегических решениях клана.</p>
-      </div>
-    </div>
-
-    <div class="rank-tier commander">
-      <div class="rank-tier-title">👑 Уровень «Командор» — высшее руководство</div>
-
-      <div class="rank-card">
-        <h4>Мл. Командор</h4>
-        <p>Помогает главе в управлении кланом. Курирует весь офицерский и полководческий состав, утверждает крупные ивенты и внутренние решения.</p>
-      </div>
-
-      <div class="rank-card">
-        <h4>Командор</h4>
-        <p>Заместитель главы. Полный доступ к управлению кланом, может исключать и повышать участников, решать конфликты на высшем уровне.</p>
-      </div>
-
-      <div class="rank-card">
-        <h4>Ст. Командор</h4>
-        <p>Первый заместитель главы. Принимает решения от имени главы в его отсутствие, курирует всё руководство, отвечает за стабильность и порядок в клане.</p>
-      </div>
-    </div>
-
-    <div class="rank-tier leader">
-      <div class="rank-tier-title">🔱 Глава клана</div>
-
-      <div class="rank-card">
-        <h4>Тег-СФРВ.Глав</h4>
-        <p>Верховный лидер клана. Финальное слово во всех решениях: приём, исключение, повышения, ивенты, правила. Имеет право менять состав, ранги и внутреннюю политику клана. Несёт полную ответственность за клан.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="security">
-    <h2>Безопасность и защита <span class="counter">12 правил</span></h2>
-
-    <div class="rule safe">
-      <h3>73. Не давайте личные данные <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Никогда не давайте адрес, номер телефона, номер карты, данные от соцсетей соклановцам — даже тем, с кем хорошо общаетесь. Мошенники всегда выглядят дружелюбно.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>74. Двухфакторка обязательна <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Включите двухфакторную аутентификацию на аккаунте Roblox и Telegram. Это защитит вас и клан от взлома.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>75. Проверяйте ссылки <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Прежде чем открыть ссылку от соклановца — проверьте её. Если просят «зайти на сайт и ввести пароль» — это фишинг, даже если ссылка пришла от друга.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>76. Пароль не повторяйте <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Не используйте один и тот же пароль на разных сайтах. Если один взломают — взломают все.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>77. Сообщайте о подозрительном <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Если заметили подозрительное поведение (странные ссылки, попытки узнать данные, фишинг) — сразу сообщите главе или замам в ЛС.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>78. Бот не спрашивает пароли <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Клан-бот никогда не спросит пароль, номер карты, CVV или любые другие секретные данные. Если кто-то «от имени бота» спрашивает — это мошенник.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>79. Не переходите по «подаркам» <span class="badge green">ЗАЩИТА</span></h3>
-      <p>«Забери 10 000 Robux бесплатно», «выиграл в лотерею», «тебе подарок от клана» — всегда проверяйте у ВОС. Скорее всего это скам.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>80. Регулярно меняйте пароль <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Раз в 3–6 месяцев меняйте пароли на важных аккаунтах. Это просто и сильно повышает безопасность.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>81. Не устанавливайте .exe <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Никогда не запускайте .exe/.msi/.bat от соклановцев, «для улучшения игры» или «для Robux». Особенно — от имени «Krnl.exe», «Roblox Hack.exe» и подобных.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>82. Проверяйте бота <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Официальный бот клана — только один. Все остальные «клан-боты» с похожими названиями — фейки. Проверяйте @username у ВОС.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>83. Не одалживайте аккаунт <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Никогда не давайте аккаунт Roblox или Telegram «поиграть», «на 5 минут», «проверить» — даже лучшим друзьям. Даже ВОС. Никому.</p>
-    </div>
-
-    <div class="rule safe">
-      <h3>84. Сообщайте о взломе <span class="badge green">ЗАЩИТА</span></h3>
-      <p>Если вас взломали — сразу сообщите клану. Возможно, злоумышленник уже пишет с вашего имени другим соклановцам.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="conflicts">
-    <h2>Суд и конфликты <span class="counter">8 правил</span></h2>
-
-    <div class="rule">
-      <h3>85. Спор — в суд</h3>
-      <p>Возник конфликт с соклановцем или админом — пишите заявление в суд клана. Публичные разборки в общем чате запрещены.</p>
-    </div>
-
-    <div class="rule">
-      <h3>86. Суд беспристрастен</h3>
-      <p>Судья клана разбирает дела по фактам: сообщения, действия, скрины. Дружба с кем-то не влияет на приговор.</p>
-    </div>
-
-    <div class="rule">
-      <h3>87. Апелляция возможна</h3>
-      <p>Если считаете приговор суда несправедливым — можно подать апелляцию главе. Решение главы — финальное.</p>
-    </div>
-
-    <div class="rule">
-      <h3>88. Ложные жалобы наказываются</h3>
-      <p>Если вы подаёте заведомо ложную жалобу с целью оклеветать соклановца — это нарушение, наказывается как клевета.</p>
-    </div>
-
-    <div class="rule">
-      <h3>89. Показания свидетелей</h3>
-      <p>В суде можно предоставить свидетелей (скрины, цитаты других участников). Ложные показания — тоже нарушение.</p>
-    </div>
-
-    <div class="rule">
-      <h3>90. Наказание — не месть</h3>
-      <p>Если вас наказали — не начинайте мстить в ответ, не срывайтесь на других соклановцах. Разбирайтесь через суд.</p>
-    </div>
-
-    <div class="rule">
-      <h3>91. Бытовые споры решаем сами</h3>
-      <p>Мелкие споры («ты не дал мне блок», «ты влез в мою постройку») — решайте сами или через офицеров. Суд — для серьёзных дел.</p>
-    </div>
-
-    <div class="rule">
-      <h3>92. Уважение к приговору</h3>
-      <p>Даже если не согласны — не оскорбляйте судью, не угрожайте, не саботируйте. Приговор есть приговор.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <section id="punish">
-    <h2>Наказания за нарушения <span class="counter">8 категорий</span></h2>
-    <div class="punishment">
-      <p><b>Читы, эксплойты, автофарм, скрипты</b> — исключение из клана сразу, без права вернуться. Жалоба в Roblox.</p>
-      <p><b>Ссылки на читы / RMT / продажа аккаунтов</b> — исключение или длительный мут (2 дня) по решению офицеров.</p>
-      <p><b>Скам, фишинг, кража аккаунтов, обман соклановцев</b> — исключение сразу с занесением в чёрный список клана.</p>
-      <p><b>Мат, спам, флуд, капс, реклама</b> — предупреждение → мут (2 часа) → мут (5 дней) → исключение.</p>
-      <p><b>NSFW-контент, шок-контент, оскорбления по признаку</b> — моментальный бан без разбора.</p>
-      <p><b>Токсичность, буллинг, травля</b> — предупреждение → мут → исключение при повторе.</p>
-      <p><b>Ложные жалобы, клевета, фейковые свидетели</b> — варн, при повторе — мут на 1 день.</p>
-      <p><b>Мелкие нарушения и спорные ситуации</b> — разбираются в Высшем Офицерском Составе или через суд клана.</p>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <footer>
     ⚓ Клан «Стокгольм» · Build a Boat for Treasure<br>
@@ -965,22 +826,63 @@
   </footer>
 </div>
 
+<button class="to-top" id="toTop" type="button" aria-label="Наверх">↑</button>
+
 <script>
-  /* ── Авто-нумерация правил в формате X.Y (1 → 0.1, 10 → 1.0, 100 → 10.0) ── */
+  /* ── Переключение вкладок ── */
+  const topTabs = document.querySelectorAll('.top-tab');
+  const panels = {
+    rules: document.getElementById('panel-rules'),
+    ranks: document.getElementById('panel-ranks')
+  };
+
+  topTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+
+      topTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      Object.values(panels).forEach(p => p.classList.remove('active'));
+      panels[target].classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  /* ── Авто-нумерация правил X.Y ── */
   document.querySelectorAll('.rule').forEach(rule => {
     const h3 = rule.querySelector('h3');
     if (!h3) return;
-
     const m = h3.textContent.match(/^\s*(\d+)\./);
     if (!m) return;
-
     const n = parseInt(m[1], 10);
     const label = Math.floor(n / 10) + '.' + (n % 10);
-
     const span = document.createElement('span');
     span.className = 'rule-num';
     span.textContent = label;
     rule.appendChild(span);
+  });
+
+  /* ── Кнопка «Наверх» ── */
+  const toTop = document.getElementById('toTop');
+  let ticking = false;
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 400) toTop.classList.add('visible');
+        else toTop.classList.remove('visible');
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   /* ── Дата в футере ── */
