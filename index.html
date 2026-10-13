@@ -88,6 +88,17 @@
     color: #a0c8ff;
   }
 
+  nav a.highlight {
+    background: linear-gradient(135deg, rgba(255, 200, 90, 0.18), rgba(255, 160, 60, 0.12));
+    border: 1px solid rgba(255, 200, 90, 0.35);
+    color: #ffc85a;
+  }
+
+  nav a.highlight:hover {
+    background: linear-gradient(135deg, rgba(255, 200, 90, 0.3), rgba(255, 160, 60, 0.2));
+    color: #ffe0a0;
+  }
+
   section {
     margin-bottom: 36px;
   }
@@ -101,6 +112,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   h2::before {
@@ -109,15 +121,17 @@
     height: 20px;
     background: linear-gradient(180deg, #60b4ff, #3a7dcc);
     border-radius: 2px;
+    flex-shrink: 0;
   }
 
   .rule {
     background: rgba(15, 23, 41, 0.5);
     border-left: 3px solid rgba(96, 180, 255, 0.4);
     border-radius: 10px;
-    padding: 16px 20px;
+    padding: 16px 20px 22px;
     margin-bottom: 12px;
     transition: all 0.2s;
+    position: relative;
   }
 
   .rule:hover {
@@ -126,29 +140,14 @@
     transform: translateX(4px);
   }
 
-  .rule.danger {
-    border-left-color: rgba(255, 90, 120, 0.6);
-  }
+  .rule.danger { border-left-color: rgba(255, 90, 120, 0.6); }
+  .rule.danger:hover { border-left-color: #ff5a78; }
 
-  .rule.danger:hover {
-    border-left-color: #ff5a78;
-  }
+  .rule.warn { border-left-color: rgba(255, 200, 90, 0.6); }
+  .rule.warn:hover { border-left-color: #ffc85a; }
 
-  .rule.warn {
-    border-left-color: rgba(255, 200, 90, 0.6);
-  }
-
-  .rule.warn:hover {
-    border-left-color: #ffc85a;
-  }
-
-  .rule.safe {
-    border-left-color: rgba(63, 185, 80, 0.6);
-  }
-
-  .rule.safe:hover {
-    border-left-color: #56d364;
-  }
+  .rule.safe { border-left-color: rgba(63, 185, 80, 0.6); }
+  .rule.safe:hover { border-left-color: #56d364; }
 
   .rule h3 {
     font-size: 15px;
@@ -157,22 +156,31 @@
     font-weight: 600;
   }
 
-  .rule.danger h3 {
-    color: #ff9aad;
-  }
-
-  .rule.warn h3 {
-    color: #ffd98a;
-  }
-
-  .rule.safe h3 {
-    color: #9ce8a8;
-  }
+  .rule.danger h3 { color: #ff9aad; }
+  .rule.warn h3 { color: #ffd98a; }
+  .rule.safe h3 { color: #9ce8a8; }
 
   .rule p {
     color: #b0c4dc;
     font-size: 14px;
   }
+
+  /* ── Сокращённый номер правила в углу ── */
+  .rule-num {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    opacity: 0.75;
+    pointer-events: none;
+    user-select: none;
+    color: #60b4ff;
+  }
+  .rule.danger .rule-num { color: #ff5a78; }
+  .rule.warn   .rule-num { color: #ffc85a; }
+  .rule.safe   .rule-num { color: #56d364; }
 
   .badge {
     display: inline-block;
@@ -187,20 +195,9 @@
     vertical-align: middle;
   }
 
-  .badge.info {
-    background: rgba(96, 180, 255, 0.15);
-    color: #60b4ff;
-  }
-
-  .badge.warn {
-    background: rgba(255, 200, 90, 0.15);
-    color: #ffc85a;
-  }
-
-  .badge.green {
-    background: rgba(63, 185, 80, 0.15);
-    color: #56d364;
-  }
+  .badge.info  { background: rgba(96, 180, 255, 0.15); color: #60b4ff; }
+  .badge.warn  { background: rgba(255, 200, 90, 0.15); color: #ffc85a; }
+  .badge.green { background: rgba(63, 185, 80, 0.15);  color: #56d364; }
 
   .punishment {
     background: linear-gradient(135deg, rgba(255, 90, 120, 0.08), rgba(255, 90, 120, 0.02));
@@ -216,9 +213,7 @@
     border-bottom: 1px dashed rgba(255, 90, 120, 0.15);
   }
 
-  .punishment p:last-child {
-    border-bottom: none;
-  }
+  .punishment p:last-child { border-bottom: none; }
 
   .punishment p::before {
     content: '→ ';
@@ -247,13 +242,98 @@
     margin-left: 8px;
   }
 
+  /* ═══════════ РАНГИ — иерархия ═══════════ */
+  .rank-tier {
+    margin-bottom: 28px;
+    border-radius: 14px;
+    padding: 18px;
+    background: rgba(15, 23, 41, 0.5);
+    border: 1px solid rgba(96, 180, 255, 0.15);
+  }
+
+  .rank-tier-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(96, 180, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .rank-tier.newbie  .rank-tier-title { color: #cd9a6a; border-bottom-color: rgba(205, 154, 106, 0.3); }
+  .rank-tier.officer .rank-tier-title { color: #b8c4d6; border-bottom-color: rgba(184, 196, 214, 0.3); }
+  .rank-tier.warlord .rank-tier-title { color: #ffc85a; border-bottom-color: rgba(255, 200, 90, 0.3); }
+  .rank-tier.commander .rank-tier-title { color: #c08aff; border-bottom-color: rgba(192, 138, 255, 0.3); }
+  .rank-tier.leader  .rank-tier-title { color: #ff6b8a; border-bottom-color: rgba(255, 107, 138, 0.3); }
+
+  .rank-tier.newbie   { background: linear-gradient(135deg, rgba(205, 154, 106, 0.06), rgba(15, 23, 41, 0.5)); border-color: rgba(205, 154, 106, 0.2); }
+  .rank-tier.officer  { background: linear-gradient(135deg, rgba(184, 196, 214, 0.05), rgba(15, 23, 41, 0.5)); border-color: rgba(184, 196, 214, 0.2); }
+  .rank-tier.warlord  { background: linear-gradient(135deg, rgba(255, 200, 90, 0.06), rgba(15, 23, 41, 0.5)); border-color: rgba(255, 200, 90, 0.22); }
+  .rank-tier.commander{ background: linear-gradient(135deg, rgba(192, 138, 255, 0.06), rgba(15, 23, 41, 0.5)); border-color: rgba(192, 138, 255, 0.22); }
+  .rank-tier.leader   { background: linear-gradient(135deg, rgba(255, 107, 138, 0.08), rgba(15, 23, 41, 0.5)); border-color: rgba(255, 107, 138, 0.28); }
+
+  .rank-card {
+    background: rgba(15, 23, 41, 0.55);
+    border-left: 3px solid rgba(96, 180, 255, 0.4);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+
+  .rank-card:last-child { margin-bottom: 0; }
+
+  .rank-card:hover {
+    background: rgba(15, 23, 41, 0.85);
+    transform: translateX(4px);
+  }
+
+  .rank-tier.newbie    .rank-card { border-left-color: rgba(205, 154, 106, 0.55); }
+  .rank-tier.newbie    .rank-card:hover { border-left-color: #cd9a6a; }
+  .rank-tier.officer   .rank-card { border-left-color: rgba(184, 196, 214, 0.55); }
+  .rank-tier.officer   .rank-card:hover { border-left-color: #b8c4d6; }
+  .rank-tier.warlord   .rank-card { border-left-color: rgba(255, 200, 90, 0.55); }
+  .rank-tier.warlord   .rank-card:hover { border-left-color: #ffc85a; }
+  .rank-tier.commander .rank-card { border-left-color: rgba(192, 138, 255, 0.55); }
+  .rank-tier.commander .rank-card:hover { border-left-color: #c08aff; }
+  .rank-tier.leader    .rank-card { border-left-color: rgba(255, 107, 138, 0.65); }
+  .rank-tier.leader    .rank-card:hover { border-left-color: #ff6b8a; }
+
+  .rank-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e8eefc;
+    margin-bottom: 5px;
+    letter-spacing: 0.2px;
+  }
+
+  .rank-tier.newbie    .rank-card h4 { color: #e8c69a; }
+  .rank-tier.officer   .rank-card h4 { color: #d6dee8; }
+  .rank-tier.warlord   .rank-card h4 { color: #ffe0a0; }
+  .rank-tier.commander .rank-card h4 { color: #d9b8ff; }
+  .rank-tier.leader    .rank-card h4 { color: #ff9ab0; }
+
+  .rank-card p {
+    color: #b0c4dc;
+    font-size: 13.5px;
+  }
+
   @media (max-width: 600px) {
     body { padding: 10px; }
     .container { padding: 20px; border-radius: 14px; }
     h1 { font-size: 24px; }
     h2 { font-size: 17px; }
     nav a { font-size: 12px; padding: 5px 10px; }
-    .rule { padding: 12px 14px; }
+    .rule { padding: 12px 14px 20px; }
+    .rule-num { font-size: 10px; bottom: 6px; right: 10px; }
+    .rank-tier { padding: 14px; }
+    .rank-tier-title { font-size: 14px; }
+    .rank-card { padding: 10px 12px; }
+    .rank-card h4 { font-size: 13px; }
+    .rank-card p { font-size: 12.5px; }
   }
 </style>
 </head>
@@ -270,7 +350,8 @@
     <a href="#chat">Чат (16–30)</a>
     <a href="#forbidden">Запрещённое ПО (31–45)</a>
     <a href="#team">Команда (46–60)</a>
-    <a href="#ranks">Ранги (61–72)</a>
+    <a href="#ranks">Правила рангов (61–72)</a>
+    <a href="#rank-list" class="highlight">🏆 Все ранги</a>
     <a href="#security">Безопасность (73–84)</a>
     <a href="#conflicts">Суд и конфликты (85–92)</a>
     <a href="#punish">Наказания (93–100)</a>
@@ -392,7 +473,7 @@
 
     <div class="rule danger">
       <h3>22. Никаких NSFW-материалов <span class="badge">БАН</span></h3>
-      <p>Ссылки на 18+, шок-контент,血腥ные материалы, скатологические картинки — моментальный бан без разбора.</p>
+      <p>Ссылки на 18+, шок-контент, кровавые материалы, скатологические картинки — моментальный бан без разбора.</p>
     </div>
 
     <div class="rule danger">
@@ -662,6 +743,96 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="rank-list">
+    <h2>🏆 Все ранги клана <span class="counter">14 рангов</span></h2>
+
+    <div class="rank-tier newbie">
+      <div class="rank-tier-title">🥉 Уровень «Новичок» — начальный состав</div>
+
+      <div class="rank-card">
+        <h4>Новичок</h4>
+        <p>Только вступил в клан. Знакомится с правилами, осваивается, изучает состав и атмосферу. Обязанностей минимум — главное быть адекватным и не нарушать правила.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Новичок II</h4>
+        <p>Освоился, знает правила. Начинает помогать соклановцам и участвовать в общих заплывах. Показывает, что готов быть частью команды.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Новичок III</h4>
+        <p>Уверенный участник. Активно помогает новичкам, участвует в ивентах и стройках. Кандидат на повышение до младшего офицера.</p>
+      </div>
+    </div>
+
+    <div class="rank-tier officer">
+      <div class="rank-tier-title">🥈 Уровень «Офицер» — помощники руководства</div>
+
+      <div class="rank-card">
+        <h4>Мл. Офицер</h4>
+        <p>Помощник в чате. Может подсказать новичкам, напомнить о правилах, помочь разобраться в клановой жизни. Замечания делает вежливо, без угроз и наказаний. О нарушениях докладывает старшим.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Офицер</h4>
+        <p>Следит за порядком в чате и помогает новичкам адаптироваться. Может напомнить о правилах и сообщить о нарушителе вышестоящим. Сам предупреждения и муты не выдаёт — это решение полководцев и выше.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Ст. Офицер</h4>
+        <p>Опытный помощник. Курирует младших офицеров, помогает решать мелкие споры, следит за активностью новичков. Может предложить наказание нарушителю, но решение принимает полководец или выше.</p>
+      </div>
+    </div>
+
+    <div class="rank-tier warlord">
+      <div class="rank-tier-title">🥇 Уровень «Полководец» — командный состав</div>
+
+      <div class="rank-card">
+        <h4>Мл. Полководец</h4>
+        <p>Первый уровень, у которого есть реальные полномочия. Может выдавать предупреждения и временные муты за нарушения, помогать офицерам в организации порядка.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Полководец</h4>
+        <p>Организует ивенты и командные заплывы, ведёт общие проекты. Имеет право исключать нарушителей и участвовать в решениях по составу клана.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Ст. Полководец</h4>
+        <p>Главный по ивентам и командной игре. Управляет офицерским составом, решает спорные ситуации, участвует в стратегических решениях клана.</p>
+      </div>
+    </div>
+
+    <div class="rank-tier commander">
+      <div class="rank-tier-title">👑 Уровень «Командор» — высшее руководство</div>
+
+      <div class="rank-card">
+        <h4>Мл. Командор</h4>
+        <p>Помогает главе в управлении кланом. Курирует весь офицерский и полководческий состав, утверждает крупные ивенты и внутренние решения.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Командор</h4>
+        <p>Заместитель главы. Полный доступ к управлению кланом, может исключать и повышать участников, решать конфликты на высшем уровне.</p>
+      </div>
+
+      <div class="rank-card">
+        <h4>Ст. Командор</h4>
+        <p>Первый заместитель главы. Принимает решения от имени главы в его отсутствие, курирует всё руководство, отвечает за стабильность и порядок в клане.</p>
+      </div>
+    </div>
+
+    <div class="rank-tier leader">
+      <div class="rank-tier-title">🔱 Глава клана</div>
+
+      <div class="rank-card">
+        <h4>Тег-СФРВ.Глав</h4>
+        <p>Верховный лидер клана. Финальное слово во всех решениях: приём, исключение, повышения, ивенты, правила. Имеет право менять состав, ранги и внутреннюю политику клана. Несёт полную ответственность за клан.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
   <section id="security">
     <h2>Безопасность и защита <span class="counter">12 правил</span></h2>
 
@@ -795,6 +966,24 @@
 </div>
 
 <script>
+  /* ── Авто-нумерация правил в формате X.Y (1 → 0.1, 10 → 1.0, 100 → 10.0) ── */
+  document.querySelectorAll('.rule').forEach(rule => {
+    const h3 = rule.querySelector('h3');
+    if (!h3) return;
+
+    const m = h3.textContent.match(/^\s*(\d+)\./);
+    if (!m) return;
+
+    const n = parseInt(m[1], 10);
+    const label = Math.floor(n / 10) + '.' + (n % 10);
+
+    const span = document.createElement('span');
+    span.className = 'rule-num';
+    span.textContent = label;
+    rule.appendChild(span);
+  });
+
+  /* ── Дата в футере ── */
   document.getElementById('date').textContent = new Date().toLocaleDateString('ru-RU', {
     day: 'numeric', month: 'long', year: 'numeric'
   });
